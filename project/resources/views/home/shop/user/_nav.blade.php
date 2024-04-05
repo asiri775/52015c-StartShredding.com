@@ -94,6 +94,12 @@
                 </a>
                 <span class="icon-thumbnail"><i class="fa fa-location-arrow" aria-hidden="true"></i></span>
             </li>
+            <li {!! (Request::is('shop-billing-setting') ? 'class="active"' : '' ) !!}>
+                <a href="{{route("home.user-billing-setting")}}" class="detailed">
+                    <span class="title">Billing Setting</span>
+                </a>
+                <span class="icon-thumbnail"><i class="fa fa-money" aria-hidden="true"></i></span>
+            </li>
             {{--            <li {!! (Request::is('shop-product-favourite') ? 'class="active"' : '' ) !!}>--}}
             {{--                <a href="{{route("shop.user-product-favourite")}}" class="detailed">--}}
             {{--                    <span class="title">My Faves</span>--}}

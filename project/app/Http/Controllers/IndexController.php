@@ -14,6 +14,7 @@ use App\Mail\ShopOrderPlacedAdmin;
 use App\Models\EmailSubject;
 use App\Models\EmailTemplate;
 use App\Order;
+use App\Credit;
 use App\Cart;
 use App\Settings;
 use App\UserUsedCoupons;
@@ -563,6 +564,18 @@ class IndexController extends Controller
             return redirect('/shop-signin');
         }
         return view('home.shop.refer-friend');
+    }
+    public function billingSetting()
+    {
+        if (Auth::guard('profile')->guest()) {
+            return redirect('/shop-signin');
+        }
+        $userInfo = Auth::guard('profile')->user();
+        $user = Clients::find($userInfo->id);
+        $orders = Order::where('customerid', $userInfo->id)->orderBy('booking_date', 'desc')->get();
+        $credits_details = Transactions::where('user_id', $userInfo->id)->orderBy('id', 'desc')->get();
+        $card_details = Credit::where('user_id', '3')->orderBy('id', 'desc')->where('status', '=', 1)->get();
+        return view('home.shop.billing-setting', compact('user', 'orders', 'credits_details', 'card_details'));
     }
 
     public function sendReferMail(Request $request)

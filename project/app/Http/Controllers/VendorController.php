@@ -15,6 +15,7 @@ use App\VendorCustomers;
 use App\OrderInquiry;
 use function GuzzleHttp\Promise\all;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -150,6 +151,25 @@ class VendorController extends Controller
            
     }
 
+    public function sa_link()
+    {
+        $id = $POST['order_id'];
+        $order = Order::findOrFail($id);
+        echo json_encode('success');
+        // if ($order != null) {
+
+        // }
+        // $model = DB::select("select * from ordered_products where orderid='$id'");
+        // $orderCheck=Order::where("id",$id)->where("order_type",3)->first();
+        // if($orderCheck){
+        //     $orderinquiry=OrderInquiry::where("order_id",$id)->first();
+        //      return view('vendor.details', compact('model', 'order','orderinquiry'));
+        // }
+        // else {
+        //      return view('vendor.details', compact('model', 'order'));
+        // }
+           
+    }
 
     public function withdraws()
     {

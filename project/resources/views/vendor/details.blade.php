@@ -177,6 +177,12 @@ $urlTime = '';
                                 </div>
                             </div>
                         @endif
+                        <div class="row" style="align-items:right;">
+                            <div class="col-md-12">
+                                <input id="order_id" value="<?=$order->id?>" hidden />
+                                <a class="btn btn-success btn-right" onclick="sa_link()" style="position:absolute; right:10px !important;">Service Agreement</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -184,8 +190,24 @@ $urlTime = '';
             </div>
         </div>
     </div>
-
-
+<script>
+    function sa_link()
+    {
+        var order_id = $("#order_id").val();
+        $.ajax({
+            type: "POST",
+            url:"<?=url('vendor/sa_link')?>",
+            data: {
+                '_token': "<?= csrf_token() ?>",
+                'order_id': order_id
+            },
+            success: function(data) {
+                toastr.success('Service Agreement sent successfully!');
+            }
+            
+        })
+    }
+</script>
 
 @stop
 

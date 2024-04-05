@@ -317,13 +317,13 @@
                                          @if($orderdet->order_type !=3)
 										 <td class="hidden-xs hidden-sm"><?= $order->status ?></td>
 										 <td class="hidden-xs hidden-sm">$ <?= number_format((float) $orderdet->pay_amount, 2, '.', '') ?></td>
-										 @if($orderdet->payment == "completed")
-											<td class="hidden-xs hidden-sm">Paid</td>
-										@elseif($orderdet->payment == "pending")
-											<td class="hidden-xs hidden-sm">Not Paid</td>
-										@else
-											<td class="hidden-xs hidden-sm">Partial Paid</td>
-										@endif
+											@if($orderdet->payment == "completed")
+												<td class="hidden-xs hidden-sm">Paid</td>
+											@elseif($orderdet->payment == "pending")
+												<td class="hidden-xs hidden-sm">Not Paid</td>
+											@else
+												<td class="hidden-xs hidden-sm">Partial Paid</td>
+											@endif
 										 @else
                                          <td class="hidden-xs hidden-sm"> Inquiry </td>
                                          <td class="hidden-xs hidden-sm"> - </td>

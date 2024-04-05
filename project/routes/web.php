@@ -152,7 +152,8 @@ Route::get('/vendor/withdraws', 'VendorController@withdraws');
 Route::any('/vendor/customers', 'VendorController@customers');
 
 
-Route::get('vendor/details/{id}', 'VendorController@details');
+Route::get('/vendor/details/{id}', 'VendorController@details');
+Route::post('/vendor/sa_link', 'VendorController@sa_link');
 
 Route::get('/vendor/plant', 'VendorController@plant');
 Route::get('/vendor/pos', 'VendorController@pos');
@@ -469,6 +470,9 @@ Route::get('/getcartdata', 'IndexController@getCartData');
 Route::get('/shop-multiple-address-edit/{id}', 'IndexController@multipleAddressEdit')->name('home.multiple-address-edit');
 Route::post('/update-cart-values', 'IndexController@productDetailsUpdate');
 Route::get('/shop-refer-friend', 'IndexController@referFriend')->name('home.user-refer-friend');
+Route::get('/shop-billing-setting', 'IndexController@billingSetting')->name('home.user-billing-setting');
+Route::get('/shop-documents-list', 'IndexController@documentsList')->name('home.user-documents-list');
+Route::get('/shop-documents/{id}', 'IndexController@documentsDetail')->name('home.user-documents-detail');
 Route::post('/shop-send-refer-mail', 'IndexController@sendReferMail')->name('shop-user-send-refer-mail');
 Route::get('/shop-multiple-address-remove/{id}', 'IndexController@multipleAddressRemove')->name('home.multiple-address-remove');
 Route::get('/shop-signin', 'IndexController@user')->name('home.user');
