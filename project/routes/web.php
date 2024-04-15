@@ -152,7 +152,11 @@ Route::get('/vendor/withdraws', 'VendorController@withdraws');
 Route::any('/vendor/customers', 'VendorController@customers');
 
 
-Route::get('vendor/details/{id}', 'VendorController@details');
+Route::get('/vendor/details/{id}', 'VendorController@details');
+Route::get('/vendor/sa_link/{id}', 'VendorController@sa_link');
+Route::get('/vendor/order_print/{id}', 'VendorController@order_print')->name('vendor.order.print');
+Route::get('/vendor/order_download/{id}', 'VendorController@orderDownload')->name('vendor.order.download');
+
 
 Route::get('/vendor/plant', 'VendorController@plant');
 Route::get('/vendor/pos', 'VendorController@pos');
@@ -166,6 +170,8 @@ Route::resource('/vendor/products', 'VendorProductsController');
 Route::get('vendor/vieworders/{status}', 'VendorController@vieworders');
 
 Route::get('vendor/profile/{id}', 'VendorController@profile');
+Route::get('vendor/service_agreement/{id}', 'VendorController@service_agreement');
+Route::post('vendor/complete_sa', 'VendorController@complete_sa')->name('vendor.complete_sa');
 
 
 Route::get('/admin/registration', 'Auth\AdminRegistrationController@showAdminRegistrationForm')->name('admin.reg');
@@ -406,6 +412,11 @@ Route::get('/vendor/get-template-order-ajax/{client_id}', 'OrderTemplateControll
 Route::post('/vendor/get-template-order-delete/{client_id}', 'OrderTemplateController@getTemplateOrderDelete');
 Route::post('/vendor/get-order-template-activate', 'OrderTemplateController@getOrderTemplateActivate');
 
+// Upload Document
+Route::get('/vendor/upload-document', 'VendorController@upload_index')->name('home.upload.index');
+Route::post('/vendor/upload-document-form', 'VendorController@upload_doc')->name('home.upload.document');
+Route::get('/vendor/delete-document/{id}', 'VendorController@delete_doc')->name('home.delete.document');
+
 Route::get('/vendor/template/{id}/create', 'OrderTemplateController@create')->name('vendor.customer.create');
 Route::get('', 'IndexController@showHome')->name('indexPage');
 Route::get('/customers', 'IndexController@showCustomersPage')->name('home.order');
@@ -469,6 +480,11 @@ Route::get('/getcartdata', 'IndexController@getCartData');
 Route::get('/shop-multiple-address-edit/{id}', 'IndexController@multipleAddressEdit')->name('home.multiple-address-edit');
 Route::post('/update-cart-values', 'IndexController@productDetailsUpdate');
 Route::get('/shop-refer-friend', 'IndexController@referFriend')->name('home.user-refer-friend');
+// Route::get('/shop-billing-setting', 'IndexController@billingSetting')->name('home.user-billing-setting');
+Route::get('/shop-documents-list', 'IndexController@documentsList')->name('home.user-documents-list');
+Route::get('/shop-documents/{id}', 'IndexController@documentsDetail')->name('home.user-documents-detail');
+
+
 Route::post('/shop-send-refer-mail', 'IndexController@sendReferMail')->name('shop-user-send-refer-mail');
 Route::get('/shop-multiple-address-remove/{id}', 'IndexController@multipleAddressRemove')->name('home.multiple-address-remove');
 Route::get('/shop-signin', 'IndexController@user')->name('home.user');
@@ -480,6 +496,20 @@ Route::get('/medical_masks', 'ShopFrontController@showMasksPage')->name('shop.ma
 Route::get('/shop-order-confirm', 'IndexController@orderConfirm')->name('home.confirm');
 Route::get('/shop-order-confirmed', 'IndexController@confirmed')->name('home.order.confirmed');
 Route::get('/shop-order-summary', 'IndexController@orderSummary')->name('home.summary');
+
+// Service Agreement
+
+Route::post('/save_signature', 'ServiceAgreementController@save_sign');
+Route::post('/complete_sa', 'ServiceAgreementController@complete_sa')->name('home.complete_sa');
+
+// Client Credit Card
+
+Route::get('/shop-billing-setting', 'clientCreditcardController@index')->name('home.credit.index');
+Route::post('/shop-billing-setting/add_credit', 'clientCreditcardController@store')->name('home.credit.add');
+Route::get('/shop-billing-setting/delete_credit/{id}', 'clientCreditcardController@destroy')->name('home.credit.delete');
+Route::get('/shop-billing-setting/edit_credit/{id}', 'clientCreditcardController@edit')->name('home.credit.edit');
+Route::post('/shop-billing-setting/update_credit/{id}', 'clientCreditcardController@update')->name('home.credit.update');
+Route::get('/shop-billing-setting/set_primary/{id}', 'clientCreditcardController@set_primary')->name('home.credit.set_primary');
 
 
 //shop PayPal

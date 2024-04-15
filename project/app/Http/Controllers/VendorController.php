@@ -13,11 +13,17 @@ use App\OrderTemplate;
 use App\Clients;
 use App\VendorCustomers;
 use App\OrderInquiry;
+use App\ServiceAgreement;
+use App\ClientCreditCard;
+use App\Models\Upload_document;
+use PDF;
 use function GuzzleHttp\Promise\all;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class VendorController extends Controller
 {
@@ -149,7 +155,6 @@ class VendorController extends Controller
         }
            
     }
-
 
     public function withdraws()
     {
@@ -869,6 +874,164 @@ class VendorController extends Controller
             return NULL;
         }
 
+    }
+
+    public function sa_link($id)
+    {
+        $vendorId = Auth::user()->id;
+        $order = Order::findOrFail($id);
+        
+        $user = Clients::find($order->customerid);
+        if(count($order->get()) != 0){
+            $userAddressSplitted = explode(", ", $order->customer_address, 1); 
+            $shippingAddressSplitted = $order->shipping_address? 
+                explode(", ", $order->shipping_address, 1): $userAddressSplitted;
+            $validator = Validator::make(['order_id' => $order->id], [
+                'order_id' => 'required|max:255|unique:service_agreements'
+            ]);
+            if ($validator->fails()) {
+                return redirect('/vendor/orders')
+                            ->withErrors($validator);
+            }
+    
+            $serviceAgreement = ServiceAgreement::Create([
+                "company_name" => $user->business_name ? $user->business_name : "",
+                "contact_name" => $user->name,
+                "phone_number" => $user->phone,
+                "email" => $user->email,
+                "billing_address_1" => $userAddressSplitted[0],
+                "billing_address_2" => count($userAddressSplitted)>1? $userAddressSplitted[1] : "",
+                "billing_city" => $order->customer_city,
+                "billing_state" => $user->Province_State,
+                "billing_postal_code" => $order->customer_zip,
+                "billing_phone" => $order->customer_phone,
+                "billing_email" => $order->customer_email,
+                "shipping_address_1" => $shippingAddressSplitted[0],
+                "shipping_address_2" => count($shippingAddressSplitted)>1? $shippingAddressSplitted[1] : "",
+                "shipping_city" => $order->shipping_city ? $order->shipping_city: $order->customer_city,
+                "shipping_state" => "",
+                "shipping_postal_code" => $order->shipping_zip? $order->shipping_zip: $order->customer_zip,
+                "shipping_phone" => $order->shipping_phone ? $order->shipping_phone : $order->customer_phone,
+                "shipping_email" => $order->shipping_email ? $order->shipping_email : $order->customer_email,
+                "order_id" => $order->id,
+                "sa_state" => '0'
+            ]);
+            $order['doc_id'] = $serviceAgreement->id;
+            $order->update();
+            return redirect('/vendor/orders')->with('message', 'Service Agreement link Sent Successfully.');
+        }
+        else {
+            return redirect('/vendor/orders');
+        }
+        
+    }
+
+    public function service_agreement($id)
+    {
+        $order = Order::find($id);
+        $customer = Clients::find($order->customerid);
+        $user = $customer;
+        $documents = ServiceAgreement::find($id);
+        $order_details =DB::table('ordered_products')
+                        ->join('products', 'products.id', '=', 'ordered_products.productid')
+                        ->select('ordered_products.*','products.title')
+                        ->where('ordered_products.orderid', $order->id)
+                        ->get();
+        return view('home.vendor-service-agreement', compact('user','customer','documents', 'order','order_details'));
+    }
+
+    public function complete_sa(Request $request)
+    {
+        $serviceAgreement = ServiceAgreement::updateOrCreate(['order_id' => $request->order_id]);
+        $serviceAgreement->fill($request->all());
+        $serviceAgreement->update();
+        return redirect('/vendor/details/'.$request->order_id)->with('message', 'Completed Document Successfully');
+    }
+
+    public function order_print($id)
+    {
+        $order = Order::findOrFail($id);
+        if ($order != null) {
+
+        }
+        $model = DB::select("select * from ordered_products where orderid='$id'");
+        $orderCheck=Order::where("id",$id)->where("order_type",3)->first();
+        view()->share('model', $model);
+        view()->share('order', $order);
+        
+        return view('home.shop.order_pdf_print');
+        if($orderCheck){
+            $orderinquiry=OrderInquiry::where("order_id",$id)->first();
+            view()->share('orderinquiry', $orderinquiry);
+             return view('vendor.order_print', compact('model', 'order','orderinquiry'));
+        }
+        else {
+             return view('vendor.order_print', compact('model', 'order'));
+        }
+    }
+
+    public function upload_index()
+    {
+        $documents = Upload_document::get();
+        return view('home.shop.documents.upload_index', compact('documents'));
+    }
+
+    public function delete_doc($id)
+    {
+        $document = Upload_document::find($id);
+        $document->delete();
+        return redirect()->back()->with('message', "Document deleted Successfully");
+    }
+
+    public function upload_doc(Request $request)
+    {
+        $request->validate([
+            'order_number' => 'required',
+            'order_date' => 'required|date',
+            'document' => 'required|file',
+        ]);
+    
+        // Process the uploaded document
+        $file = $request->file('document');
+
+        // Save the file to storage
+        $path = $file->store('uploads');
+
+        // Save file information to the database
+        $newFile = new Upload_document();
+        $newFile->order_id = $request->order_number;
+        $newFile->order_date = $request->order_date;
+        $newFile->doc_type = $file->getClientOriginalExtension();
+        $newFile->file_name = $file->getClientOriginalName();
+        $newFile->file_path = $path;
+        $newFile->save();
+        // Save it to storage, database, or perform other operations
+        
+        // Redirect back with a success message
+        return redirect()->back()->with('message', 'Document uploaded successfully.');
+    }
+
+    public function orderDownload($id)
+    {
+        $order = Order::findOrFail($id);
+        if ($order != null) {
+
+        }
+        $model = DB::select("select * from ordered_products where orderid='$id'");
+        $orderCheck=Order::where("id",$id)->where("order_type",3)->first();
+        view()->share('model', $model);
+        view()->share('order', $order);
+        if($orderCheck){
+            $orderinquiry=OrderInquiry::where("order_id",$id)->first();
+            view()->share('orderinquiry', $orderinquiry);
+            $pdf = PDF::loadView('vendor.order_pdf');
+            return $pdf->download('order' . $order->id . '.pdf');
+        }
+        else {
+            $pdf = PDF::loadView('vendor.order_pdf');
+            return $pdf->download('order' . $order->id . '.pdf');
+        }
+        //return view('shop.order_pdf',compact('user','order','multiple_address'))->render();
     }
 
 }

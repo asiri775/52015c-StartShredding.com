@@ -211,6 +211,16 @@
 	{{ Session::get('message') }}
 </div>
 @endif
+@if(Session::has('errors'))
+	<div class="alert alert-danger alert-dismissable">
+		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		<ul>
+		@foreach ($errors->all() as $error)
+			<li>{{ $error }}</li>
+		@endforeach
+		</ul>
+	</div>
+@endif
 <div class="page-title row">
 	<form action="" method="get">
 		<div class="form-group">
@@ -317,13 +327,13 @@
                                          @if($orderdet->order_type !=3)
 										 <td class="hidden-xs hidden-sm"><?= $order->status ?></td>
 										 <td class="hidden-xs hidden-sm">$ <?= number_format((float) $orderdet->pay_amount, 2, '.', '') ?></td>
-										 @if($orderdet->payment == "completed")
-											<td class="hidden-xs hidden-sm">Paid</td>
-										@elseif($orderdet->payment == "pending")
-											<td class="hidden-xs hidden-sm">Not Paid</td>
-										@else
-											<td class="hidden-xs hidden-sm">Partial Paid</td>
-										@endif
+											@if($orderdet->payment == "completed")
+												<td class="hidden-xs hidden-sm">Paid</td>
+											@elseif($orderdet->payment == "pending")
+												<td class="hidden-xs hidden-sm">Not Paid</td>
+											@else
+												<td class="hidden-xs hidden-sm">Partial Paid</td>
+											@endif
 										 @else
                                          <td class="hidden-xs hidden-sm"> Inquiry </td>
                                          <td class="hidden-xs hidden-sm"> - </td>

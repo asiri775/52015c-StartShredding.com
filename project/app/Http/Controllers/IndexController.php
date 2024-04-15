@@ -14,12 +14,16 @@ use App\Mail\ShopOrderPlacedAdmin;
 use App\Models\EmailSubject;
 use App\Models\EmailTemplate;
 use App\Order;
+use App\Credit;
 use App\Cart;
 use App\Settings;
 use App\UserUsedCoupons;
 use App\OrderedProducts;
 use App\Product;
+use App\ServiceAgreement;
+use App\ClientCreditCard;
 use Faker\Provider\Address;
+use Illuminate\Support\Facades\DB;
 use PDF;
 use App\Transactions;
 use App\PasswordReset;
@@ -563,6 +567,18 @@ class IndexController extends Controller
             return redirect('/shop-signin');
         }
         return view('home.shop.refer-friend');
+    }
+    public function billingSetting()
+    {
+        if (Auth::guard('profile')->guest()) {
+            return redirect('/shop-signin');
+        }
+        $userInfo = Auth::guard('profile')->user();
+        $user = Clients::find($userInfo->id);
+        $orders = Order::where('customerid', $userInfo->id)->orderBy('booking_date', 'desc')->get();
+        $credits_details = Transactions::where('user_id', $userInfo->id)->orderBy('id', 'desc')->get();
+        $card_details = Credit::where('user_id', '3')->orderBy('id', 'desc')->where('status', '=', 1)->get();
+        return view('home.shop.billing-setting', compact('user', 'orders', 'credits_details', 'card_details'));
     }
 
     public function sendReferMail(Request $request)
@@ -1215,6 +1231,49 @@ class IndexController extends Controller
         } catch (\Beanstream\Exception $e) {
             return redirect()->back()->withErrors([$e->getMessage()]);
         }
+    }
+
+    public function documentsList()
+    {
+        if (Auth::guard('profile')->guest()) {
+            return redirect('/shop-signin');
+        }
+        $userInfo = Auth::guard('profile')->user();
+        $user = Clients::find($userInfo->id);
+        $documents = DB::table('service_agreements')
+                ->join('orders', 'service_agreements.order_id', '=', 'orders.id')
+                ->select('service_agreements.*')
+                ->where('orders.customerid', $userInfo->id)
+                ->get();
+        return view('home.shop.documents.index', compact('user','documents'));
+
+    }
+
+    
+
+    public function documentsDetail($id)
+    {
+        if (Auth::guard('profile')->guest()) {
+            return redirect('/shop-signin');
+        }
+        
+        $userInfo = Auth::guard('profile')->user();
+        $user = Clients::find($userInfo->id);
+        $customer = Clients::find($userInfo->id);
+        $documents = ServiceAgreement::find($id);
+        
+        $order = Order::find($documents->order_id);
+        $order_details =DB::table('ordered_products')
+                        ->join('products', 'products.id', '=', 'ordered_products.productid')
+                        ->select('ordered_products.*','products.title')
+                        ->where('ordered_products.orderid', $order->id)
+                        ->get();
+        $card_detail = ClientCreditCard::where('client_id', $userInfo->id)->where('is_primary', '1')->get();
+        $card_details = $card_detail->first();
+        if($documents->sa_state == '1'){
+            return view('home.service-agreement-view', compact('user', 'customer','documents', 'order','order_details','card_details'));
+        }
+        return view('home.service-agreement', compact('user', 'customer','documents', 'order','order_details','card_details'));
     }
 
 
