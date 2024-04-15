@@ -21,9 +21,7 @@ $totalAmount = 0;
 $urlTime = '';
 
 ?>
-@extends('vendor.includes.master-vendor')
 
-@section('content')
     <div class="row">
         @if (Session::has('message'))
             <div class="alert alert-success alert-dismissable">
@@ -178,22 +176,6 @@ $urlTime = '';
                                 </div>
                             </div>
                         @endif
-                        <div class="row" style="align-items:right;">
-                            <div class="col-md-12">
-                                <a class="btn btn-primary btn-right"
-                                    onclick="printPage( '{{route('vendor.order.print', ['id' => $order->id])}}' )"
-                                    href="javascript:void(0);"></i> <span class="bold">PRINT</span></a>
-                                <button id="download-btn"
-                                        class="btn btn-success btn-right"
-                                        type="button"><i class="fa fa-download"></i> <span class="bold">DOWNLOAD</span>
-                                </button>
-                                @if($order->doc_id == "")
-                                    <a href="{!! url('vendor/sa_link/'.$order->id) !!}" class="btn btn-success btn-right">Service Agreement link</a>
-                                @else
-                                    <a href="{!! url('vendor/service_agreement/'.$order->id) !!}" class="btn btn-success btn-right">Edit Service Agreement</a>
-                                @endif
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -201,29 +183,7 @@ $urlTime = '';
             </div>
         </div>
     </div>
-<script>
-    function printPage(url) {
-        if (url) {
-            var w = window.open(url, 'print page', 'height=900,width=800');
-            if (window.focus) {
-                w.focus()
-            }
-            w.window.print();
-            setTimeout(function () {
-                w.window.close();
-            }, 2000);
-            return false;
-        }
-    }
 
-    $("#download-btn").click(function (e) {
-        e.preventDefault();  //stop the browser from following
-        window.location.href = '/vendor/order_download/<?php echo $order->id;?>';
-    });
-</script>
 
-@stop
 
-@section('footer')
 
-@stop

@@ -92,6 +92,9 @@
 <!-- END CORE TEMPLATE JS -->
 <!-- BEGIN PAGE LEVEL JS -->
 <script src="{{ URL::asset('new_assets/assets/js/scripts.js')}}" type="text/javascript"></script>
+<script src="{{ URL::asset('new_assets/assets/plugins/bootstrap-form-wizard/js/jquery.bootstrap.wizard.min.js')}}" type="text/javascript"></script>
+<script src="{{ URL::asset('new_assets/assets/js/form_elements.js')}}" type="text/javascript"></script>
+<script src="{{ URL::asset('new_assets/assets/js/form_wizard.js')}}" type="text/javascript"></script>
 <!-- END PAGE LEVEL JS -->
 <!-- END CORE TEMPLATE JS -->
 <!-- BEGIN PAGE LEVEL JS -->

@@ -8,6 +8,8 @@ use App\Order;
 use App\ServiceAgreement;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ServiceAgreementController extends Controller {
 
@@ -52,6 +54,50 @@ class ServiceAgreementController extends Controller {
         ]);
 
 
-        return view('new_pages.service_agreement',compact('user','order','multiple_address', 'serviceAgreement'));
+        return view('new_pages.service_agreement',compact('user','order', 'serviceAgreement'));
     }
+
+    public function save_sign()
+    {
+        $user = Clients::find(Auth::user()->id);
+        $img = $_POST['image'];
+        $client_name = $_POST['client_name'];
+        $order_id = $_POST['order_id'];
+        if($client_name == $user->name){
+            $img = str_replace('data:image/jpeg;base64,', '', $img);   
+            $img = str_replace(' ', '+', $img);   
+            $data = base64_decode($img);
+    
+            if(!file_exists($_SERVER['DOCUMENT_ROOT'] . "/photos"))
+            {
+                mkdir($_SERVER['DOCUMENT_ROOT'] . "/photos");      
+            }
+            
+            if(file_exists($_SERVER['DOCUMENT_ROOT'] . "/photos/".$order_id.'.jpg'))
+            {
+                unlink($_SERVER['DOCUMENT_ROOT'] . "/photos/".$order_id.'.jpg');
+            }
+            $success = file_put_contents($_SERVER['DOCUMENT_ROOT'] . "/photos/".$order_id.'.jpg', $data);
+            echo $success?json_encode('Save successfully'):json_encode("Unable to save the image");
+            
+        }
+        else {
+            return json_encode("The name is incorrect");
+        }
+    }
+
+    public function complete_sa(Request $request)
+    {
+        
+        // $serviceAgreement = ServiceAgreement::where('order_id', $request->order_id);
+        // $serviceAgreement->fill($request->all());
+        // $serviceAgreement->sa_state = '1';
+        // $serviceAgreement->update();
+        $serviceAgreement = ServiceAgreement::updateOrCreate(['order_id' => $request->order_id]);
+        $serviceAgreement->fill($request->all());
+        $serviceAgreement->sa_state = '1';
+        $serviceAgreement->update();
+        return redirect('/shop-documents-list')->with('message', 'Completed Document Successfully');
+    }
+    
 }

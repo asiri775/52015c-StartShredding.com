@@ -1,5 +1,5 @@
 @extends('home.shop.user.new_main')
-@section('title','My Documents')
+@section('title','My Account')
 @section('content')
 
 <style>
@@ -158,13 +158,13 @@
                                     <div class="col-md-6">
                                       <div class="form-group form-group-default required">
                                         <label>Company Name</label>
-                                        <input type="text" class="form-control client_info" id="companyName" name="companyName" placeholder="Company Name" value="<?php echo $user->business_name?>" required>
+                                        <input type="text" class="form-control client_info" id="companyName" name="companyName" placeholder="Company Name" value="<?php echo $documents->company_name?>" required>
                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                       <div class="form-group form-group-default required">
                                         <label>Contact Name</label>
-                                        <input type="text" class="form-control client_info" id="contactName" name="contactName" placeholder="Contact Name" value="<?php echo $order->customer_name?>" required>
+                                        <input type="text" class="form-control client_info" id="contactName" name="contactName" placeholder="Contact Name" value="<?php echo $documents->contact_name?>" required>
                                        </div>
                                     </div>
                                   </div>  
@@ -172,13 +172,13 @@
                                   <div class="col-md-6">
                                     <div class="form-group form-group-default required">
                                       <label>Phone</label>
-                                      <input id="phone" type="tel" pattern="\d{3}\-\d{3}\-\d{4}" class="form-control telephone client_info" data-mask="(999)-999-9999" placeholder="(999)-999-9999" value="<?php echo $order->customer_phone?>"  required />
+                                      <input id="phone" type="tel" pattern="\d{3}\-\d{3}\-\d{4}" class="form-control telephone client_info" data-mask="(999)-999-9999" placeholder="(999)-999-9999" value="<?php echo $documents->phone_number?>"  required />
                                     </div>
                                   </div>
                                   <div class="col-md-6">
                                     <div class="form-group form-group-default">
                                       <label>Email</label>
-                                      <input type="email" class="form-control" id="email" name="email" value="<?php echo $order->customer_email?>"  placeholder="joan@lifeforcephysio.com">
+                                      <input type="email" class="form-control" id="email" name="email" value="<?php echo $documents->email?>"  placeholder="joan@lifeforcephysio.com">
                                     </div>
                                   </div>
                                 </div>
@@ -187,13 +187,13 @@
                                   <div class="col-md-6">
                                     <div class="form-group form-group-default required">
                                       <label>Addresss Line 1</label>
-                                      <input type="text" class="form-control client_info" id="bill-firstName" name="firstName" placeholder="577" value="<?php echo $customer->address?>"  required>
+                                      <input type="text" class="form-control client_info" id="bill-firstName" name="firstName" placeholder="577" value="<?php echo $documents->billing_address_1?>"  required>
                                     </div>
                                   </div>
                                   <div class="col-md-6">
                                     <div class="form-group form-group-default">
                                       <label>Addresss Line 2</label>
-                                      <input type="text" class="form-control" id="bill-lastName" name="lastName" placeholder="Burnhamthorpe Road">
+                                      <input type="text" class="form-control" id="bill-lastName" name="lastName" placeholder="Burnhamthorpe Road" value="<?php echo $documents->billing_address_2?>">
                                     </div>
                                   </div>
                                 </div>
@@ -201,19 +201,19 @@
                                   <div class="col-md-4">
                                     <div class="form-group form-group-default required">
                                       <label>City</label>
-                                      <input type="text" class="form-control client_info" id="bill-city" name="city" value="<?php echo $customer->city?>"  placeholder="Toronto" required>
+                                      <input type="text" class="form-control client_info" id="bill-city" name="city" value="<?php echo $documents->billing_city?>"  placeholder="Toronto" required>
                                     </div>
                                   </div>
                                   <div class="col-md-4">
                                     <div class="form-group form-group-default">
                                       <label>State/Province/Region</label>
-                                      <input type="text" class="form-control" id="bill-state" name="state" value="<?php echo $customer->Province_State?>"  placeholder="Ontario">
+                                      <input type="text" class="form-control" id="bill-state" name="state" value="<?php echo $documents->billing_state?>"  placeholder="Ontario">
                                     </div>
                                   </div>
                                   <div class="col-md-4">
                                     <div class="form-group form-group-default required">
                                       <label>Postal Code</label>
-                                      <input type="text" class="form-control client_info" id="bill-postal" name="postal"  placeholder="M9C 2Y3" required>
+                                      <input type="text" class="form-control client_info" id="bill-postal" name="postal"  placeholder="M9C 2Y3" value="<?php echo $documents->billing_postal_code?>" required>
                                     </div>
                                   </div>
                                 </div>
@@ -221,36 +221,36 @@
                                 <div class="col-md-6">
                                   <div class="form-group form-group-default required">
                                     <label>Phone</label>
-                                    <input type="text" class="form-control" id="bill-phoneNumber" name="phoneNumber" value="<?php echo $customer->phone?>"  id="phoneNumber2" value="" placeholder="(999)-999-9999">
+                                    <input type="text" class="form-control" id="bill-phoneNumber" name="phoneNumber" value="<?php echo $documents->billing_phone?>"  id="phoneNumber2" value="" placeholder="(999)-999-9999">
                                   </div>
                                 </div>
                                 <div class="col-md-6">
                                   <div class="form-group form-group-default">
                                     <label>Email</label>
-                                    <input type="email" class="form-control" id="bill-email" name="email" value="<?php echo $customer->email?>"  placeholder="joan@lifeforcephysio.com">
+                                    <input type="email" class="form-control" id="bill-email" name="email" value="<?php echo $documents->billing_email?>"  placeholder="joan@lifeforcephysio.com">
                                   </div>
                                 </div>
                               </div>
                               <div class="serv-check justify-content-between d-inline-flex w-100">
                                 <p class="font-montserrat bold fs-16 bold mt-3 mb-3">Shipping Address</p>
-                                <div class="form-check primary mt-1">
+                                <!-- <div class="form-check primary mt-1">
                                   <input type="checkbox" onclick="checkBox(this)" id="defaultCheck">
                                   <label for="defaultCheck" class="bold">
                                     Same as Billing
                                   </label>
-                                </div>
+                                </div> -->
                               </div>
                                 <div class="row clearfix mb-1">
                                   <div class="col-md-6">
                                     <div class="form-group form-group-default required">
                                       <label>Addresss Line 1</label>
-                                      <input type="text" class="form-control client_info" id="shipp-firstName" name="firstName" placeholder="577" required>
+                                      <input type="text" class="form-control client_info" id="shipp-firstName" name="firstName" placeholder="577" value="<?php echo $documents->shipping_address_1?>" required>
                                     </div>
                                   </div>
                                   <div class="col-md-6">
                                     <div class="form-group form-group-default">
                                       <label>Addresss Line 2</label>
-                                      <input type="text" class="form-control" id="shipp-lastName" name="lastName" placeholder="Burnhamthorpe Road">
+                                      <input type="text" class="form-control" id="shipp-lastName" name="lastName" placeholder="Burnhamthorpe Road" value="<?php echo $documents->shipping_address_2?>">
                                     </div>
                                   </div>
                                 </div>
@@ -258,19 +258,19 @@
                                   <div class="col-md-4">
                                     <div class="form-group form-group-default required">
                                       <label>City</label>
-                                      <input type="text" class="form-control client_info" id="shipp-city" name="city" placeholder="Toronto" required>
+                                      <input type="text" class="form-control client_info" id="shipp-city" name="city" placeholder="Toronto" value="<?php echo $documents->shipping_city?>" required>
                                     </div>
                                   </div>
                                   <div class="col-md-4">
                                     <div class="form-group form-group-default">
                                       <label>State/Province/Region</label>
-                                      <input type="text" class="form-control" id="shipp-state" name="state" placeholder="Ontario">
+                                      <input type="text" class="form-control" id="shipp-state" name="state" placeholder="Ontario" value="<?php echo $documents->shipping_state?>">
                                     </div>
                                   </div>
                                   <div class="col-md-4">
                                     <div class="form-group form-group-default required">
                                       <label>Postal Code</label>
-                                      <input type="text" class="form-control client_info" id="shipp-postal" name="postal" placeholder="M9C 2Y3" required>
+                                      <input type="text" class="form-control client_info" id="shipp-postal" name="postal" placeholder="M9C 2Y3" value="<?php echo $documents->shipping_postal_code?>" required>
                                     </div>
                                   </div>
                                 </div>
@@ -278,13 +278,13 @@
                                 <div class="col-md-6">
                                   <div class="form-group form-group-default required">
                                     <label>Phone</label>
-                                    <input type="text" class="form-control" id="shipp-phoneNumber" name="phoneNumber" id="phoneNumber3" value="" placeholder="(999)-999-9999">
+                                    <input type="text" class="form-control" id="shipp-phoneNumber" name="phoneNumber" id="phoneNumber3" value="<?php echo $documents->shipping_phone?>" placeholder="(999)-999-9999">
                                   </div>
                                 </div>
                                 <div class="col-md-6">
                                   <div class="form-group form-group-default">
                                     <label>Email</label>
-                                    <input type="email" class="form-control" id="shipp-email" name="email" placeholder="joan@lifeforcephysio.com">
+                                    <input type="email" class="form-control" id="shipp-email" value="<?php echo $documents->shipping_email?>" name="email" placeholder="joan@lifeforcephysio.com">
                                   </div>
                                 </div>
                               </div>
@@ -503,7 +503,7 @@
                              <div class="row">
                               <div class="col-12 mt-3">
                                 <div class="form-check primary m-t-0 ml-2 text-right">
-                                  <input type="checkbox" value="1" id="checkbox-agree" required>
+                                  <input type="checkbox" value="1" id="checkbox-agree" checked required>
                                   <label for="checkbox-agree" class="fs-16 bold font-montserrat">The undersigned hereby agrees to this agreement, on behalf of the
                                     Client.
                                   </label>
@@ -537,12 +537,12 @@
                                     <div class="clearfix"></div>
                                     <div class="form-group form-group-default required m-t-25">
                                       <label>Card holder's name</label>
-                                      <input type="text" class="form-control" id="card_holder_name" placeholder="Name on the card" value="<?php echo $card_details->card_holder_name?>" required>
+                                      <input type="text" class="form-control" id="card_holder_name" placeholder="Name on the card" value="<?php echo $documents->credit_card_name?>" required>
                                     </div>
                                     <div class="form-group form-group-default required">
                                       <label>Card number</label>
                                       <!--input type="text" class="form-control" placeholder="8888-8888-8888-8888" required-->
-                                      <input type="text" class="form-control card-no" id="card_number" name="card-num" placeholder="8888 8888 8888 8888" value="<?php echo $card_details->card_number?>" size="18" id="cr_no" minlength="19" maxlength="19" required>
+                                      <input type="text" class="form-control card-no" id="card_number" name="card-num" placeholder="8888 8888 8888 8888" value="<?php echo $documents->credit_card_number?>" size="18" id="cr_no" minlength="19" maxlength="19" required>
                                     </div>
                                       <div class="card-date mb-3 w-100">
                                          <div class="row no-margin">
@@ -552,7 +552,7 @@
                                               <div class="form-input-group">
                                                 <label class="fade">Month</label>
                                                 <div id="selector">
-                                                  <select class="form-control input-lg" id="exp_month" value="{{$card_details->exp_month}}">
+                                                  <select class="form-control input-lg" id="exp_month" value="{{$documents->credit_card_expire_month}}">
                                                     <option value="1">Jan (01)</option>
                                                     <option value="2">Feb (02)</option>
                                                     <option value="3">Mar (03)</option>
@@ -577,7 +577,7 @@
                                               <div class="form-input-group">
                                                 <label class="fade">Year</label>
                                                 <div id="selector">
-                                                  <select class="form-control input-lg" id="exp_year" value="{{$card_details->exp_year}}">
+                                                  <select class="form-control input-lg" id="exp_year" value="{{$documents->credit_card_expire_year}}">
                                                     <option>2022</option>
                                                     <option>2023</option>
                                                     <option>2024</option>
@@ -596,7 +596,7 @@
                                           <div class="col-md-2 p-0">
                                             <label class="fs-14 m-25 sm-ml-0"><b>CCV Code</b></label>
                                               <div class="form-group required">
-                                                <input class="form-control mh-55 m-25 sm-ml-0" type="password" id="ccv" name="ccv" value="<?php echo $card_details->ccv?>" placeholder="000" size="1" minlength="3" maxlength="3" required>
+                                                <input class="form-control mh-55 m-25 sm-ml-0" type="password" id="ccv" name="ccv" value="<?php echo $documents->credit_card_ccv?>" placeholder="000" size="1" minlength="3" maxlength="3" required>
                                               </div>
                                           </div>
                                         </div>
@@ -607,12 +607,13 @@
                               <div class="row">
                                 <div class="sign-pad-iframe">
                                   <div class="iframe-container ml-5 ml-m-3">
-                                    <iframe src="/new_assets/signature.html"></iframe>
+                                    <img src="/photos/{{$documents->order_id}}.jpg">
+                                    <input value="{{$documents->contact_name}}" />
                                   </div>
                                 </div>
-                                <div class="sign-note">
+                                <!-- <div class="sign-note">
                                   <p class="fs-14">By digitally Signing this Agreement, and electronically entering your name on this form, you hereby attest to being authorized to provide the Credit Card information above, and hereby authorize <b>SHREDEX INC.</b> to post charges for services rendered, including any Cancellation Fees, Late Fee and any additional charges as outlined in the Terms and Conditions of this Agreement</p>
-                                </div> 
+                                </div>  -->
                               </div>
                             </div>
                           </div>
@@ -660,9 +661,9 @@
                                 <input name="credit_card_expire_year" id="form_exp_year" hidden>
                                 <input name="credit_card_ccv" id="form_ccv" hidden>
                                 <input name="order_id" id="order_id" value="{{ $order->id }}" hidden>
-                                <button aria-label="" id="confirm_form" class="btn btn-primary btn-cons from-left pull-right" type="submit">
+                                <a href="{{route('home.user-documents-list')}}" aria-label="" id="confirm_form" class="btn btn-primary btn-cons from-left pull-right">
                                   <span>Confirm</span>
-                                </button>
+                                </a>
                               </form>
                               <input name="save_flag" id="save_flag" hidden>
                               <input name="csrf" id="csrf" value="{{ csrf_token() }}" hidden>
@@ -700,6 +701,7 @@
 <script src="{{ URL::asset('new_assets/assets/js/form_wizard.js')}}" type="text/javascript"></script>
                 <script>
 $(document).ready(function(){
+    
   function validate() {
         // Perform your validation here
         var isValid = true; // For demonstration purposes, always return true
@@ -745,6 +747,7 @@ $(document).ready(function(){
         }
     });
 //For Card Number formatted input
+
 
 var cardNum = document.getElementById('cr_no');
 cardNum.onkeyup = function (e) {

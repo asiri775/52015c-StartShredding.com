@@ -5178,11 +5178,11 @@ Misc buttons
   background-position: -67px -10px !important;
 }
 
-.alert-success {
+/* .alert-success {
   background-color: #cccccc;
   color: black;
   border-color: black;
-}
+} */
 
 .alert-success .close {
   background-position: -38px -10px !important;
