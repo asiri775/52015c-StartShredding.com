@@ -171,8 +171,10 @@ class clientCreditcardController extends Controller
         $userInfo = Auth::guard('profile')->user();
         $user = Clients::find($userInfo->id);
         $old_primary = ClientCreditCard::where('client_id', $userInfo->id)->where('is_primary', '1')->first();
-        $old_primary['is_primary'] = '0';
-        $old_primary->update();
+        if($old_primary){
+            $old_primary['is_primary'] = '0';
+            $old_primary->update();
+        }
         $new_primary = ClientCreditCard::find($id);
         $new_primary['is_primary'] = '1';
         $new_primary->update();
