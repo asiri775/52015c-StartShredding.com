@@ -51,7 +51,7 @@
                                     <td class="fs-12">{{date('m/d/Y', strtotime($document->order_date))}}</td>
                                     <td class="fs-12">{{$document->order_id}}</td>
                                     <td class="fs-12">{{$document->doc_type}}</td>
-                                    <td class="fs-12"><a href="{{$document->file_path}}" download><i class="fa fa-download" aria-hidden="true"></i></a>
+                                    <td class="fs-12"><a href="{{ route('file.download', ['id' => $document->id]) }}"><i class="fa fa-download" aria-hidden="true"></i></a>
                                     <a href="{!! url('/vendor/delete-document/'.$document->id)!!}"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                     </td>
                                 </tr>
@@ -70,7 +70,7 @@
                                 @csrf
                                 <div class="form-group form-group-default">
                                     <label for="order_number">Order Number:</label>
-                                    <input type="text" id="order_number" class="form-control" name="order_number" required>
+                                    <input type="text" id="order_number" class="form-control" value={{$order_id}} name="order_number" required>
                                 </div>
                                 <div class="form-group form-group-default">
                                     <label for="order_date">Order Date:</label>

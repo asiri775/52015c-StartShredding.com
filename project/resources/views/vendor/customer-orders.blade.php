@@ -91,6 +91,8 @@
                                 <li class="active"><a
                                             href="{{url('/vendor/customer/'.$client->id.'/orders')}}">Orders</a>
                                 </li>
+                                <li><a href="{{url('/vendor/customer/'.$client->id.'/billing')}}">Billing</a></li>
+                                <li><a href="{{url('/vendor/customer/'.$client->id.'/documents')}}" >Documents</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane  mt-3" id="1"></div>

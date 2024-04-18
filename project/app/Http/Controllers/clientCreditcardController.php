@@ -80,7 +80,7 @@ class clientCreditcardController extends Controller
         $credit['exp_year'] = $request->exp_year;
         $credit['ccv'] = $request->ccv;
         $is_primary = ClientCreditCard::where('client_id', $userInfo->id)->get();
-        if(empty($is_primary)){
+        if(count($is_primary) == 0){
             $credit['is_primary'] = '1';
         }
         else {
@@ -125,10 +125,10 @@ class clientCreditcardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = $this->validator($request->all());
-        if($validator->fails()){
-            return redirect('/shop-billing-setting')->withErrors($validator);
-        }
+        // $validator = $this->validator($request->all());
+        // if($validator->fails()){
+        //     return redirect('/shop-billing-setting')->withErrors($validator);
+        // }
         $userInfo = Auth::guard('profile')->user();
         $user = Clients::find($userInfo->id);
         $credit = ClientCreditCard::find($id);
@@ -171,8 +171,10 @@ class clientCreditcardController extends Controller
         $userInfo = Auth::guard('profile')->user();
         $user = Clients::find($userInfo->id);
         $old_primary = ClientCreditCard::where('client_id', $userInfo->id)->where('is_primary', '1')->first();
-        $old_primary['is_primary'] = '0';
-        $old_primary->update();
+        if($old_primary){
+            $old_primary['is_primary'] = '0';
+            $old_primary->update();
+        }
         $new_primary = ClientCreditCard::find($id);
         $new_primary['is_primary'] = '1';
         $new_primary->update();

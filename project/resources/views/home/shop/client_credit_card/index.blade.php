@@ -161,7 +161,9 @@
                                                     <a href="{{url('/shop-billing-setting/delete_credit/')}}/{{$card->id}}" style="background-color: #a832a4!important;" class="btn btn-success btn-size"><font style="font-size: 10px !important;">REMOVE</font>
                                                     </a>
                                                     @else
-                                                    <a href="#!" class=""><font style="font-size: 20px !important;">Primary Account</font>
+                                                    <a href="#!" class=""><font style="font-size: 12px !important;">Primary Account</font>
+                                                    </a>
+                                                    <a href="{{url('/shop-billing-setting/delete_credit/')}}/{{$card->id}}" style="background-color: #a832a4!important;" class="btn btn-success btn-size"><font style="font-size: 10px !important;">REMOVE</font>
                                                     </a>
                                                     @endif
                                                 </div>

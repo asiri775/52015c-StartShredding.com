@@ -144,11 +144,6 @@ if(isset($_GET['order_transit']) && $_GET['order_transit']!=""){
 	<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 left-table">
 		<div class="row">
 			<div class="bg-white">
-				<div class="row  pull-right">
-					<div class="col-md-12">
-						<a href="{!!url('/vendor/upload-document')!!}" class="btn btn-success btn-cons" type="button">Upload file</a>
-					</div>
-				</div>
 				<div class="row">
 					<div class="col-md-12 col-xs-12">
 						<form action="{!! url('vendor/action/request-pickup') !!}" method="post">

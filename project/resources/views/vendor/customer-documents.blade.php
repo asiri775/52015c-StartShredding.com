@@ -103,22 +103,39 @@
                                             <div class="table-responsive">
                                                 <div id="example_wrapper" class="dataTables_wrapper no-footer">
                                                     <table class="table table-bordered w-100" id="documents-table">
-                                                        <thead>
-                                                            <th>Doc ID</th>
-                                                            <th>Order#</th>
-                                                            <th>Order Date</th>
-                                                            <th>Complete Date</th>
-                                                            <th>Actions</th>
+                                                    <thead>
+                                                        <tr class="text-center">
+                                                            <th  class="all-caps">Date</th>
+                                                            <th style=" white-space: nowrap;" class="all-caps">Order ID</th>
+                                                            <th  class="all-caps">Company Name</th>
+                                                            <th  class="all-caps">Contact Name</th>
+                                                            <th  class="all-caps">From</th>
+                                                            <th  class="all-caps">To</th>
+                                                            <th  class="all-caps">Amount</th>
+                                                            <th class="all-caps">Status <i class="fa fa-question-circle"
+                                                                                        style="color:white;" aria-hidden="true"></i></th>
+                                                        </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($order as $item)
-                                                                <tr>
-                                                                    <td>{{ $item->doc_id }}</td>
-                                                                    <td>{{ $item->order_number }}</td>
-                                                                    <td>{{ $item->booking_date }}</td>
-                                                                    <td>{{ $item->complete_date }}</td>
-                                                                    <td></td>
+                                                            @foreach($documents as $document)
+                                                                @if($document->sa_state == 1)
+                                                                <tr class="text-center">
+                                                                    <td class="fs-12">{{date('m/d/Y', strtotime($document->created_at))}}</td>
+                                                                    <td class="fs-12">{{$document->order_id}}</td>
+                                                                    <td class="fs-12">{{$document->company_name}}</td>
+                                                                    <td class="fs-12">{{$document->contact_name}}</td>
+                                                                    <td class="fs-12">{{$document->operation_from}}</td>
+                                                                    <td class="fs-12">{{$document->operation_to}}</td>
+                                                                    <td class="fs-12">{{$settings[0]->currency_sign}}{{ number_format($document->make_it_count, 2) }}</td>
+                                                                    
+                                                                    <td class="fs-12">
+                                                                        <a href="{!!url('/vendor/service_agreement/'.$document->order_id)!!}" class="btn complete-btn btn-success btn-cons btn-block"
+                                                                                type="button"><span>Completed</span>
+                                                                        </a>
+                                                                    </td>
+                                                                    
                                                                 </tr>
+                                                                @endif
                                                             @endforeach
                                                         </tbody>
                                                     </table>

@@ -577,7 +577,7 @@
                                               <div class="form-input-group">
                                                 <label class="fade">Year</label>
                                                 <div id="selector">
-                                                  <select class="form-control input-lg" id="exp_year" value="{{$documents->credit_card_expire_year}}">
+                                                  <select class="form-control input-lg" id="exp_year">
                                                     <option>2022</option>
                                                     <option>2023</option>
                                                     <option>2024</option>
@@ -605,15 +605,17 @@
                                 <!-- </form> -->
                               </div>
                               <div class="row">
-                                <div class="sign-pad-iframe">
-                                  <div class="iframe-container ml-5 ml-m-3">
+                                <div class="col-md-12">
+                                  <div class="col-md-5 ml-5 ml-m-3">
                                     <img src="/photos/{{$documents->order_id}}.jpg">
+                                    <label>Signature: </label>
                                     <input value="{{$documents->contact_name}}" />
                                   </div>
+                                  <div class="sign-note col-md-6">
+                                    <p class="fs-14">By digitally Signing this Agreement, and electronically entering your name on this form, you hereby attest to being authorized to provide the Credit Card information above, and hereby authorize <b>SHREDEX INC.</b> to post charges for services rendered, including any Cancellation Fees, Late Fee and any additional charges as outlined in the Terms and Conditions of this Agreement</p>
+                                  </div>
                                 </div>
-                                <!-- <div class="sign-note">
-                                  <p class="fs-14">By digitally Signing this Agreement, and electronically entering your name on this form, you hereby attest to being authorized to provide the Credit Card information above, and hereby authorize <b>SHREDEX INC.</b> to post charges for services rendered, including any Cancellation Fees, Late Fee and any additional charges as outlined in the Terms and Conditions of this Agreement</p>
-                                </div>  -->
+                                 
                               </div>
                             </div>
                           </div>
@@ -701,7 +703,14 @@
 <script src="{{ URL::asset('new_assets/assets/js/form_wizard.js')}}" type="text/javascript"></script>
                 <script>
 $(document).ready(function(){
-    
+  var operation_from = "{{$documents->operation_from}}";
+  var operation_to = "{{$documents->operation_to}}";
+  var exp_month = "{{$documents->credit_card_expire_month}}";
+  var exp_year = "{{$documents->credit_card_expire_year}}";
+  $('#operation_from').val(operation_from);
+  $('#operation_to').val(operation_to);
+  $('#credit_card_expire_month').val(credit_card_expire_month);
+  $('#credit_card_expire_year').val(credit_card_expire_year);
   function validate() {
         // Perform your validation here
         var isValid = true; // For demonstration purposes, always return true

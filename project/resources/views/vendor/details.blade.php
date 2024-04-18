@@ -53,7 +53,11 @@ $urlTime = '';
 
                 <div class="bg-white" style="padding-top: 50px;padding-bottom: 50px;">
                     <div class="card-body p-0">
-
+                        <div class="row  pull-right">
+                            <div class="col-md-12">
+                                <a href="{!!url('/vendor/upload-document/'.$order->id)!!}" class="btn btn-success btn-cons" type="button">Upload file</a>
+                            </div>
+                        </div>
 
                         <div class="row pb-5 p-5">
                             <div class="col-md-6">
@@ -187,9 +191,12 @@ $urlTime = '';
                                         class="btn btn-success btn-right"
                                         type="button"><i class="fa fa-download"></i> <span class="bold">DOWNLOAD</span>
                                 </button>
-                                @if($order->doc_id == "")
+                                <?php
+                                    $service_agreement = ServiceAgreement::where('order_id', $order->id)->first();
+                                 ?>
+                                @if(is_null($service_agreement) )
                                     <a href="{!! url('vendor/sa_link/'.$order->id) !!}" class="btn btn-success btn-right">Service Agreement link</a>
-                                @else
+                                @elseif($service_agreement->sa_state == 1)
                                     <a href="{!! url('vendor/service_agreement/'.$order->id) !!}" class="btn btn-success btn-right">Edit Service Agreement</a>
                                 @endif
                             </div>

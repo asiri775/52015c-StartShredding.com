@@ -99,57 +99,82 @@
                                             </div>
                                         </div>
                                         <div class="panel-body">
-                                            <form action="{{ url('/vendor/customer/'.$client->id.'/addBilling') }}" method="POST" class="" id="form-billing" role="form">
-                                                {{ csrf_field() }}
-                                                <div class="clearfix"></div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group form-group-default required">
-                                                            <label>Card holder's Name</label>
-                                                            <input class="form-control" type="text"
-                                                                    name="cardholder_name"
-                                                                    id="cardholder_name" value="{{ $user->cardholder_name }}"
-                                                                    placeholder="Name on card"
-                                                                    required>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group form-group-default required">
-                                                            <label>Card Number</label>
-                                                            <input class="form-control card-no" type="text" name="cardnumber"
-                                                                    id="cr-no" value="{{ $user->cardnumber }}"
-                                                                    placeholder="Card Number" minlength="16" maxlength="19" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <div class="form-group form-group-default required">
-                                                            <label>Expiry Date</label>
-                                                            <input class="form-control" type="text"
-                                                                    name="expirydate" value="{{ $user->expirydate }}"
-                                                                    id="expiry_date" placeholder="01/12" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <div class="form-group form-group-default required">
-                                                            <label>CVV</label>
-                                                            <input class="form-control" type="number"
-                                                                    name="cvv" value="{{ $user->cvv }}"
-                                                                    id="cvv" maxlength="3" minlength="3" placeholder="000" required>
-                                                        </div>
-                                                    </div>
+                                        <div class="col-md-12">
+                                            <div class="card card-default">
+                                                <div class="invoice padding-20 sm-padding-10">
                                                     
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <button class="btn btn-primary btn-cons m-t-2" type="submit">
-                                                            Save Changes
-                                                        </button>
+                                                    <div class="card-body p-t-20">
+                                                        <form action="">
+                                                            <div class="row justify-content-left">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group" style="display: inline-block">
+
+                                                                        <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                <h4><b>Credit Cards</b></h4>
+                                                                                <p>Details</p>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+
+                                                        <hr>
+                                                        <div class="">
+                                                            <table class="table table-hover table-condensed table-responsive table-responsive"
+                                                                id="tableTransactions">
+                                                                <thead bgcolor="#1f217d">
+                                                                <tr>
+                                                                    <!-- NOTE * : Inline Style Width For Table Cell is Required as it may differ from user to user
+                                                                    Comman Practice Followed
+                                                                    -->
+                                                                    <th style="width:20%;"><font color="#fc7b03">id</font></th>
+                                                                    <th style="width:20%;"><font color="#fc7b03">Cardholder_Name</font></th>
+                                                                    <th style="width: 20%;"><font color="#fc7b03">Card_Number</font></th>
+                                                                    <th style="width: 20%;"><font color="#fc7b03">Expiry</font></th>
+                                                                    <th style="width: 20%;"><font color="#fc7b03">CCV</font></th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach($card_details as $card)
+                                                                        <tr class="text-center">
+                                                                            <td class="fs-12">{{ $card->id}}</td>
+                                                                            <td class="fs-12">{{ $card->card_holder_name}}</td>
+                                                                            <td class="fs-12">{{ $card->card_number}}</td>
+                                                                            <td class="fs-12">{{$card->exp_month.'/'.$card->exp_year}}</td>
+                                                                            <td class="fs-12">{{ $card->ccv}}</td>
+                                                                        
+
+                                                                            <!-- <td class="fs-12">{{ $card->is_primary }}</td> -->
+                                                                            <!-- <td class="fs-12">{{$settings[0]->currency_sign}}{{ $card->amount }}</td> -->
+                                                                            
+                                                                        </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <!--<div class="row">
+                                                            <div class="col-md-2">
+                                                                <input type="checkbox" value="1" id="checkbox1" required name="terms">
+                                                                <label for="checkbox1" class="text-info small"> <a href="http://backpocket.ca/terms.html"
+                                                                                                                class="text-info ">SELECT ALL</a></label>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <input type="checkbox" value="1" id="checkbox1" required name="terms">
+                                                                <label for="checkbox1" class="text-info small"> <a href="http://backpocket.ca/terms.html"
+                                                                                                                class="text-info ">
+                                                                    DESELECT</a></label>
+                                                            </div>
+
+                                                        </div>-->
+
                                                     </div>
+                                                    <br>
                                                 </div>
-                                            </form>
+                                            </div>
+                                        </div>
                                         </div>
                                     </div>
                                 </div>

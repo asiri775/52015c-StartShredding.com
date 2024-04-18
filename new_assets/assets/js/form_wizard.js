@@ -104,13 +104,6 @@
                     $('#checkbox-agree-valid').html('<span class="text-danger">Required</span>');
                     return false;
                 }
-                else if(index == 3){
-                    $('#form_card_holder_name').val($('#card_holder_name').val());
-                    $('#form_card_number').val($('#card_number').val());
-                    $('#form_exp_month').val($('#exp_month').val());
-                    $('#form_exp_year').val($('#exp_year').val());
-                    $('#form_ccv').val($('#ccv').val());
-                }
                 else{
                     $('#checkbox-agree-valid').html('');
                 }
