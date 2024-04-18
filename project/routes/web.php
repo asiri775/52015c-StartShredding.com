@@ -173,6 +173,10 @@ Route::get('vendor/profile/{id}', 'VendorController@profile');
 Route::get('vendor/service_agreement/{id}', 'VendorController@service_agreement');
 Route::post('vendor/complete_sa', 'VendorController@complete_sa')->name('vendor.complete_sa');
 
+Route::get('vendor/service_agreement_print/{id}', 'VendorController@service_agreement_print')->name('vendor.service_agreement.print');
+Route::get('vendor/service_agreement_download/{id}', 'VendorController@service_agreement_download')->name('vendor.service_agreement.download');
+Route::get('vendor/service_agreement_email/{id}', 'VendorController@service_agreement_email')->name('vendor.service_agreement.download');
+
 
 Route::get('/admin/registration', 'Auth\AdminRegistrationController@showAdminRegistrationForm')->name('admin.reg');
 Route::post('/admin/register', 'Auth\AdminRegistrationController@register')->name('admin.reg.submit');
@@ -390,6 +394,8 @@ Route::any('/client_user_activate/{takn}', 'ClientOrderController@client_user_ac
 Route::get('/vendor/customer/{id}', 'VendorController@show')->name('vendor.customer.show');
 Route::get('/vendor/customer/{id}/templates', 'VendorController@templates')->name('vendor.customer.templates');
 Route::get('/vendor/customer/{id}/orders', 'VendorController@orders')->name('vendor.customer.orders');
+Route::get('/vendor/customer/{id}/documents', 'VendorController@documents')->name('vendor.customer.documents');
+Route::get('/vendor/customer/{id}/billing', 'VendorController@billing')->name('vendor.customer.billing');
 Route::any('/vendor/order/get_ajax_product', 'VendorOrderController@getAJAXProduct')->name('get_ajax_product');
 Route::resource('/vendor/order-template', 'OrderTemplateController');
 Route::post('/vendor/order-template/generate', 'OrderTemplateController@makeRecurringOrder');
@@ -413,9 +419,11 @@ Route::post('/vendor/get-template-order-delete/{client_id}', 'OrderTemplateContr
 Route::post('/vendor/get-order-template-activate', 'OrderTemplateController@getOrderTemplateActivate');
 
 // Upload Document
-Route::get('/vendor/upload-document', 'VendorController@upload_index')->name('home.upload.index');
+Route::get('/vendor/upload-document/{id}', 'VendorController@upload_index')->name('home.upload.index');
 Route::post('/vendor/upload-document-form', 'VendorController@upload_doc')->name('home.upload.document');
 Route::get('/vendor/delete-document/{id}', 'VendorController@delete_doc')->name('home.delete.document');
+
+Route::get('download/{id}', 'VendorController@download_doc')->name('file.download');
 
 Route::get('/vendor/template/{id}/create', 'OrderTemplateController@create')->name('vendor.customer.create');
 Route::get('', 'IndexController@showHome')->name('indexPage');

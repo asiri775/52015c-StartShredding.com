@@ -522,6 +522,7 @@
                                 <!-- <form role="form"> -->
                                   <div class="bg-contrast-lower b-rad-lg credit-card">
                                     <h3 class="font-montserrat pull-left no-margin p-sm-b-3">Credit Card</h3>
+                                    
                                     <ul class="list-unstyled pull-right list-inline sm-pull-left sm-p-0">
                                       <li>
                                         <a href="#">
@@ -534,16 +535,34 @@
                                         </a>
                                       </li>
                                     </ul>
-                                    <div class="clearfix"></div>
-                                    <div class="form-group form-group-default required m-t-25">
-                                      <label>Card holder's name</label>
-                                      <input type="text" class="form-control" id="card_holder_name" placeholder="Name on the card" value="<?php echo $card_details->card_holder_name?>" required>
+                                    
+                                    <div class="clearfix">
+                                      
                                     </div>
-                                    <div class="form-group form-group-default required">
-                                      <label>Card number</label>
-                                      <!--input type="text" class="form-control" placeholder="8888-8888-8888-8888" required-->
-                                      <input type="text" class="form-control card-no" id="card_number" name="card-num" placeholder="8888 8888 8888 8888" value="<?php echo $card_details->card_number?>" size="18" id="cr_no" minlength="19" maxlength="19" required>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <select class="form-control input-lg" id="sel_card">
+                                              <option>No Card Selected</option>
+                                              @for($i = 0; $i < count($card_details); $i++)
+                                                <option value="{{$i}}">CARD# {{$card_details[$i]->card_number}}</option>
+                                              @endfor
+                                            </select>
+                                            <!-- <div class="radio radio-primary radio-circle">
+                                                <input type="raio" checked="checked" value="1" id="checkbox9">
+                                                <label for="checkbox9" style="font-size: 10px !important;">CARD# **** **** **** 7829</label>
+                                            </div> -->
+                                        </div>
                                     </div>
+                                      <div class="form-group form-group-default required m-t-25">
+                                        <label>Card holder's name</label>
+                                        <input type="text" class="form-control" id="card_holder_name" placeholder="Name on the card" required>
+                                      </div>
+                                      <div class="form-group form-group-default required">
+                                        <label>Card number</label>
+                                        <!--input type="text" class="form-control" placeholder="8888-8888-8888-8888" required-->
+                                        <input type="text" class="form-control card-no" id="card_number" name="card-num" placeholder="8888 8888 8888 8888" size="18" id="cr_no" minlength="19" maxlength="19" required>
+                                      </div>
                                       <div class="card-date mb-3 w-100">
                                          <div class="row no-margin">
                                           <div class="col-md-3 no-padding-sm">
@@ -552,7 +571,7 @@
                                               <div class="form-input-group">
                                                 <label class="fade">Month</label>
                                                 <div id="selector">
-                                                  <select class="form-control input-lg" id="exp_month" value="{{$card_details->exp_month}}">
+                                                  <select class="form-control input-lg" id="exp_month">
                                                     <option value="1">Jan (01)</option>
                                                     <option value="2">Feb (02)</option>
                                                     <option value="3">Mar (03)</option>
@@ -577,7 +596,7 @@
                                               <div class="form-input-group">
                                                 <label class="fade">Year</label>
                                                 <div id="selector">
-                                                  <select class="form-control input-lg" id="exp_year" value="{{$card_details->exp_year}}">
+                                                  <select class="form-control input-lg" id="exp_year">
                                                     <option>2022</option>
                                                     <option>2023</option>
                                                     <option>2024</option>
@@ -596,12 +615,13 @@
                                           <div class="col-md-2 p-0">
                                             <label class="fs-14 m-25 sm-ml-0"><b>CCV Code</b></label>
                                               <div class="form-group required">
-                                                <input class="form-control mh-55 m-25 sm-ml-0" type="password" id="ccv" name="ccv" value="<?php echo $card_details->ccv?>" placeholder="000" size="1" minlength="3" maxlength="3" required>
+                                                <input class="form-control mh-55 m-25 sm-ml-0" type="password" id="ccv" name="ccv" placeholder="000" size="1" minlength="3" maxlength="3" required>
                                               </div>
                                           </div>
                                         </div>
                                        </div>
                                     </div>
+                                  </div>
                                 <!-- </form> -->
                               </div>
                               <div class="row">
@@ -700,6 +720,39 @@
 <script src="{{ URL::asset('new_assets/assets/js/form_wizard.js')}}" type="text/javascript"></script>
                 <script>
 $(document).ready(function(){
+  <?php
+    $jsonData = json_encode($card_details);
+    ?>
+  $('#sel_card').change(function(){
+    var i = $('#sel_card').val();
+    console.log(i);
+    var card_details = <?php echo $jsonData; ?>;
+    if(i == "No Card Selected"){
+      $('#card_holder_name').val("");
+      $('#card_number').val("");
+      $('#exp_month').val("");
+      $('#exp_year').val("");
+      $('#ccv').val("");
+      $('#form_card_holder_name').val("");
+      $('#form_card_number').val("");
+      $('#form_exp_month').val("");
+      $('#form_exp_year').val("");
+      $('#form_ccv').val("");
+    }
+    else {
+      $('#card_holder_name').val(card_details[i].card_holder_name);
+      $('#card_number').val(card_details[i].card_number);
+      $('#exp_month').val(card_details[i].exp_month);
+      $('#exp_year').val(card_details[i].exp_year);
+      $('#ccv').val(card_details[i].ccv);
+      $('#form_card_holder_name').val($('#card_holder_name').val());
+      $('#form_card_number').val($('#card_number').val());
+      $('#form_exp_month').val($('#exp_month').val());
+      $('#form_exp_year').val($('#exp_year').val());
+      $('#form_ccv').val($('#ccv').val());
+    }
+    
+  });
   function validate() {
         // Perform your validation here
         var isValid = true; // For demonstration purposes, always return true
@@ -737,9 +790,14 @@ $(document).ready(function(){
               alert('You must save the signature');
             }
             else {
-              alert('You must complete the form')
+              alert('You must complete the form');
             }
-        } else {
+        }
+        if($('#sel_card').val() == "No Card Selected"){
+          alert('You must select the card');
+        }
+         else {
+
             console.log("Form validation successful. Proceeding with form submission.");
             $this.submit();
         }

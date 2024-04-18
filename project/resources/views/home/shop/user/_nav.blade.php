@@ -104,7 +104,7 @@
                 <a href="{{route("home.user-documents-list")}}" class="detailed">
                     <span class="title">Documents</span>
                 </a>
-                <span class="icon-thumbnail"><i class="fa fa-paper" aria-hidden="true"></i></span>
+                <span class="icon-thumbnail"><i class="fa fa-file" aria-hidden="true"></i></span>
             </li>
             {{--            <li {!! (Request::is('shop-product-favourite') ? 'class="active"' : '' ) !!}>--}}
             {{--                <a href="{{route("shop.user-product-favourite")}}" class="detailed">--}}

@@ -614,7 +614,9 @@ class IndexController extends Controller
         }
         $userInfo = Auth::guard('profile')->user();
         $user = Clients::find($userInfo->id);
-        $orders = Order::where('customerid', $userInfo->id)->orderBy('booking_date', 'desc')->get();
+        $orders = Order::where('orders.customerid', $userInfo->id)->orderBy('booking_date', 'desc')
+                 ->join('service_agreements','orders.id','=', 'service_agreements.order_id')
+                 ->select('orders.*', 'service_agreements.sa_state')->get();
         $credits_details = Transactions::where('user_id', $userInfo->id)->orderBy('id', 'desc')->get();
         return view('home.shop.my_orders', compact('user', 'orders', 'credits_details'));
     }
@@ -1260,16 +1262,15 @@ class IndexController extends Controller
         $userInfo = Auth::guard('profile')->user();
         $user = Clients::find($userInfo->id);
         $customer = Clients::find($userInfo->id);
-        $documents = ServiceAgreement::find($id);
+        $documents = ServiceAgreement::where('order_id', $id)->first();
         
-        $order = Order::find($documents->order_id);
+        $order = Order::find($id);
         $order_details =DB::table('ordered_products')
                         ->join('products', 'products.id', '=', 'ordered_products.productid')
                         ->select('ordered_products.*','products.title')
                         ->where('ordered_products.orderid', $order->id)
                         ->get();
-        $card_detail = ClientCreditCard::where('client_id', $userInfo->id)->where('is_primary', '1')->get();
-        $card_details = $card_detail->first();
+        $card_details = ClientCreditCard::where('client_id', $userInfo->id)->get();
         if($documents->sa_state == '1'){
             return view('home.service-agreement-view', compact('user', 'customer','documents', 'order','order_details','card_details'));
         }

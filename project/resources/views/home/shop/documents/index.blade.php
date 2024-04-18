@@ -58,6 +58,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach($documents as $document)
+                                            @if($document->sa_state == 1)
                                             <tr class="text-center">
                                                 <td class="fs-12">{{date('m/d/Y', strtotime($document->created_at))}}</td>
                                                 <td class="fs-12">{{$document->order_id}}</td>
@@ -66,20 +67,14 @@
                                                 <td class="fs-12">{{$document->operation_from}}</td>
                                                 <td class="fs-12">{{$document->operation_to}}</td>
                                                 <td class="fs-12">{{$settings[0]->currency_sign}}{{ number_format($document->make_it_count, 2) }}</td>
-                                                @if($document->sa_state == 0)
                                                 <td class="fs-12">
-                                                    <a href="{!!url('/shop-documents/'.$document->id)!!}" class="btn schedule-btn btn-warning btn-cons btn-block"
-                                                            type="button"><span>Not Completed</span>
-                                                    </a>
-                                                </td>
-                                                @else
-                                                <td class="fs-12">
-                                                    <a href="{!!url('/shop-documents/'.$document->id)!!}" class="btn complete-btn btn-success btn-cons btn-block"
+                                                    <a href="{!!url('/shop-documents/'.$document->order_id)!!}" class="btn complete-btn btn-success btn-cons btn-block"
                                                             type="button"><span>Completed</span>
                                                     </a>
                                                 </td>
-                                                @endif
+                                                
                                             </tr>
+                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>
