@@ -1072,10 +1072,10 @@ class VendorController extends Controller
 
         // Save PDF to storage
 
-        $pdfPath = storage_path('app/pdf/document.pdf');
+        $pdfPath = storage_path('app/document.pdf');
         file_put_contents($pdfPath, $pdfContent);
         try {
-            Mail::to("robertturner199337@gmail.com")->send(new ServiceAgreementPDFMail($order, $documents, $order_details, $pdfPath));
+            Mail::to($user->email)->send(new ServiceAgreementPDFMail($order, $documents, $order_details, $pdfPath));
             unlink($pdfPath);
             return redirect()->back()->with('message', 'Email sent Successfully');
         } catch (\Throwable $th) {
