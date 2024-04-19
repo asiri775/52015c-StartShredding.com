@@ -23,213 +23,25 @@
                 <!-- <div class="card-body p-t-20">-->
                 <!-- <div class="container-fluid"> -->
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="card card-default">
-                            <div class="invoice padding-20 sm-padding-10">
-                                @if(Session::has('message'))
-                                <div class="alert alert-success alert-dismissable">
-                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                    {{ Session::get('message') }}
-                                </div>
-                                @endif
-                                @if(Session::has('errors'))
-                                <div class="alert alert-danger alert-dismissable">
-                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                    <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                    </ul>
-                                </div>
-                                @endif
-                                <div class="card-body p-t-20">
-                                    <form action="{{route('home.credit.add')}}" method="POST">
-                                        {{ csrf_field() }}
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label class="font-clr" style="color: #a832a4">ADD NEW CARD</label>
-                                            </div>
-                                        </div>
-                                        <div class="row justify-content-left">
-                                        
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <label class="font-clr font-sz">Cardholder_Name </label>
-                                                            <div class="form-group form-group-default">
-                                                                <input type="text" name="cardholder_name" id="cardholder_name" value="" class="form-control" required>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <label class="font-clr font-sz">Card_Number </label>
-                                                            <div class="form-group form-group-default">
-                                                                <!-- <input type="password" name="card_number" id="card_number" value="" class="form-control" > -->
-                                                                <input type="text" class="form-control card-no" name="card_number" placeholder="8888 8888 8888 8888" size="18" id="cr_no" minlength="19" maxlength="19" required>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <label class="font-clr font-sz">EXPIRY(MM) </label>
-                                                            <div class="form-group form-group-default">
-                                                                <!-- <input type="text" nname="route" id="route" value="" class="form-control"> -->
-                                                                <select class="form-control" name="exp_month" required>
-                                                                    <option value="1">Jan (01)</option>
-                                                                    <option value="2">Feb (02)</option>
-                                                                    <option value="3">Mar (03)</option>
-                                                                    <option value="4">Apr (04)</option>
-                                                                    <option value="5">May (05)</option>
-                                                                    <option value="6">Jun (06)</option>
-                                                                    <option value="7">Jul (07)</option>
-                                                                    <option value="8">Aug (08)</option>
-                                                                    <option value="9">Sep (09)</option>
-                                                                    <option value="10">Oct (10)</option>
-                                                                    <option value="11">Nov (11)</option>
-                                                                    <option value="12">Dec (12)</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <label class="font-clr font-sz">EXPIRY(YY) </label>
-                                                            <div class="form-group form-group-default">
-                                                                <!-- <input type="text" nname="route" id="route" value="" class="form-control"> -->
-                                                                <select class="form-control" name="exp_year" required>
-                                                                    <option>2024</option>
-                                                                    <option>2025</option>
-                                                                    <option>2026</option>
-                                                                    <option>2027</option>
-                                                                    <option>2028</option>
-                                                                    <option>2029</option>
-                                                                    <option>2030</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <label class="font-clr font-sz">CCV Code</label>
-                                                            <div class="form-group form-group-default">
-                                                                <input type="text" name="ccv" id="ccv" placeholder="000" minlength="3" maxlength="3" value="" class="form-control" required>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <!-- <h4 style="color: #6232a8!important;">$84.67</h4> -->
-                                                            <div class="btn-group">
-                                                                <button type="submit" style="background-color: #6232a8!important;" class="btn btn-success"><font style="font-size: 10px !important;">ADD CARDS</font>
-                                                                </button>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <label class="font-clr" style="color: #a832a4">MANAGE CARDS </label>
-                                        </div>
-
-                                    </div>
-                                    @foreach($card_details as $card)
-                                        <div class="row">
-                                            <div class="col-md-7">
-                                                <div class="checkbox check-primary checkbox-circle">
-                                                    <label style="font-size: 10px !important;">CARD# {{$card -> card_number}}</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-5">
-                                                <label class="font-clr">&nbsp</label>
-                                                <div class="btn-group">
-                                                    <a href="{{url('/shop-billing-setting/edit_credit/')}}/{{$card->id}}" style="background-color: #6232a8!important;" class="btn btn-success btn-size"><font style="font-size: 10px !important;">Edit</font>
-                                                    </a>
-                                                    @if($card->is_primary == "0")
-                                                    <a href="{{url('/shop-billing-setting/set_primary/')}}/{{$card->id}}" style="background-color: #6232a8!important;" class="btn btn-success btn-size"><font style="font-size: 10px !important;">Set as Primary</font>
-                                                    </a>
-                                                    <a href="{{url('/shop-billing-setting/delete_credit/')}}/{{$card->id}}" style="background-color: #a832a4!important;" class="btn btn-success btn-size"><font style="font-size: 10px !important;">REMOVE</font>
-                                                    </a>
-                                                    @else
-                                                    <a href="#!" class=""><font style="font-size: 12px !important;">Primary Account</font>
-                                                    </a>
-                                                    <a href="{{url('/shop-billing-setting/delete_credit/')}}/{{$card->id}}" style="background-color: #a832a4!important;" class="btn btn-success btn-size"><font style="font-size: 10px !important;">REMOVE</font>
-                                                    </a>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                    <br>
-                                </div>
-                                <br>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="card card-default">
                             <div class="invoice padding-20 sm-padding-10">
                                 
                                 <div class="card-body p-t-20">
-                                    <form action="">
-                                        <div class="row justify-content-left">
-                                            <div class="col-md-6">
-                                                <div class="form-group" style="display: inline-block">
+                                    <div class="row justify-content-left">
+                                        <div class="col-md-12">
+                                            <div class="form-group" style="display: inline-block">
 
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <h4><b>Credit Cards</b></h4>
-                                                            <p>Details</p>
-                                                        </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <h4><b>Credit Cards</b></h4>
+                                                        <p>Details</p>
+                                                    </div>
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                       <!-- <div class="col-md-12">
-                                                            <input style="border-color:#8533ff !important " type="text" class="form-control" placeholder="SEARCH BY PRODUCT NAME">
-                                                        </div>-->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group" style="display: inline-block">
-
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <label class="font-cl1">SHOW</label>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <select style="border-color:#8533ff !important " class="form-control">
-                                                                <option value="" selected disabled>25</option> ;
-                                                                <option value="">25</option>
-                                                                <option value="">50</option>
-                                                                <option value="">75</option>
-                                                                <option value="">100</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <label class="font-cl1">ITEMS</label>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
-
-                                    <hr>
+                                    </div>
                                     <div class="">
                                         <table class="table table-hover table-condensed table-responsive table-responsive"
                                                id="tableTransactions">
@@ -238,11 +50,11 @@
                                                 <!-- NOTE * : Inline Style Width For Table Cell is Required as it may differ from user to user
                                                 Comman Practice Followed
                                                 -->
-                                                <th style="width:20%;"><font color="#fc7b03">id</font></th>
+                                                <th style="width:30%;"><font color="#fc7b03">id</font></th>
                                                 <th style="width:20%;"><font color="#fc7b03">Cardholder_Name</font></th>
                                                 <th style="width: 20%;"><font color="#fc7b03">Card_Number</font></th>
-                                                <th style="width: 20%;"><font color="#fc7b03">Expiry</font></th>
-                                                <th style="width: 20%;"><font color="#fc7b03">CCV</font></th>
+                                                <th style="width: 30%;"><font color="#fc7b03">Expiry</font></th>
+                                                <th style="width: 30%;"><font color="#fc7b03">CCV</font></th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -263,20 +75,6 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <!--<div class="row">
-                                        <div class="col-md-2">
-                                            <input type="checkbox" value="1" id="checkbox1" required name="terms">
-                                            <label for="checkbox1" class="text-info small"> <a href="http://backpocket.ca/terms.html"
-                                                                                               class="text-info ">SELECT ALL</a></label>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="checkbox" value="1" id="checkbox1" required name="terms">
-                                            <label for="checkbox1" class="text-info small"> <a href="http://backpocket.ca/terms.html"
-                                                                                               class="text-info ">
-                                                DESELECT</a></label>
-                                        </div>
-
-                                    </div>-->
 
                                 </div>
                                 <br>

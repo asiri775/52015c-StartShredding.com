@@ -99,6 +99,141 @@
                                             </div>
                                         </div>
                                         <div class="panel-body">
+                                            <div class="col-md-12">
+                                                <div class="card card-default">
+                                                    <div class="invoice padding-20 sm-padding-10">
+                                                        <div class="card-body p-t-20">
+                                                            <form action="{{route('home.credit.add')}}" method="POST">
+                                                                {{ csrf_field() }}
+                                                                <input value="{{$client->id}}" name = "client_id"  hidden>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <label class="font-clr" style="color: #a832a4">ADD NEW CARD</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row justify-content-left">
+                                                                
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <div class="row">
+                                                                                <div class="col-md-12">
+                                                                                    <label class="font-clr font-sz">Cardholder_Name </label>
+                                                                                    <div class="form-group form-group-default">
+                                                                                        <input type="text" name="cardholder_name" id="cardholder_name" value="" class="form-control" required>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col-md-12">
+                                                                                    <label class="font-clr font-sz">Card_Number </label>
+                                                                                    <div class="form-group form-group-default">
+                                                                                        <!-- <input type="password" name="card_number" id="card_number" value="" class="form-control" > -->
+                                                                                        <input type="text" class="form-control card-no" name="card_number" placeholder="8888 8888 8888 8888" size="18" id="cr_no" minlength="19" maxlength="19" required>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col-md-4">
+                                                                                    <label class="font-clr font-sz">EXPIRY(MM) </label>
+                                                                                    <div class="form-group form-group-default">
+                                                                                        <!-- <input type="text" nname="route" id="route" value="" class="form-control"> -->
+                                                                                        <select class="form-control" name="exp_month" required>
+                                                                                            <option value="1">Jan (01)</option>
+                                                                                            <option value="2">Feb (02)</option>
+                                                                                            <option value="3">Mar (03)</option>
+                                                                                            <option value="4">Apr (04)</option>
+                                                                                            <option value="5">May (05)</option>
+                                                                                            <option value="6">Jun (06)</option>
+                                                                                            <option value="7">Jul (07)</option>
+                                                                                            <option value="8">Aug (08)</option>
+                                                                                            <option value="9">Sep (09)</option>
+                                                                                            <option value="10">Oct (10)</option>
+                                                                                            <option value="11">Nov (11)</option>
+                                                                                            <option value="12">Dec (12)</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-4">
+                                                                                    <label class="font-clr font-sz">EXPIRY(YY) </label>
+                                                                                    <div class="form-group form-group-default">
+                                                                                        <!-- <input type="text" nname="route" id="route" value="" class="form-control"> -->
+                                                                                        <select class="form-control" name="exp_year" required>
+                                                                                            <option>2024</option>
+                                                                                            <option>2025</option>
+                                                                                            <option>2026</option>
+                                                                                            <option>2027</option>
+                                                                                            <option>2028</option>
+                                                                                            <option>2029</option>
+                                                                                            <option>2030</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-4">
+                                                                                    <label class="font-clr font-sz">CCV Code</label>
+                                                                                    <div class="form-group form-group-default">
+                                                                                        <input type="text" name="ccv" id="ccv" placeholder="000" minlength="3" maxlength="3" value="" class="form-control" required>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-11">
+                                                                        <div class="btn-group pull-right">
+                                                                            <button type="submit" style="background-color: #6232a8!important;" class="btn btn-success"><font style="font-size: 10px !important;">ADD CARDS</font>
+                                                                            </button>
+
+                                                                        </div>
+                                                                    </div>
+                                                                        
+
+                                                                </div>
+                                                            </form>
+
+                                                            <hr>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <label class="font-clr" style="color: #a832a4">MANAGE CARDS </label>
+                                                                </div>
+
+                                                            </div>
+                                                            @foreach($card_details as $card)
+                                                                <div class="row">
+                                                                    <div class="col-md-7">
+                                                                        <div class="checkbox check-primary checkbox-circle">
+                                                                            <label style="font-size: 10px !important;">CARD# {{$card -> card_number}}</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-5">
+                                                                        <label class="font-clr">&nbsp</label>
+                                                                        <div class="btn-group">
+                                                                            <a href="{{url('/vendor/edit_credit/')}}/{{$card->id}}" style="background-color: #6232a8!important;" class="btn btn-success btn-size"><font style="font-size: 10px !important;">Edit</font>
+                                                                            </a>
+                                                                            @if($card->is_primary == "0")
+                                                                            <a href="{{url('/shop-billing-setting/set_primary/')}}/{{$card->id}}" style="background-color: #6232a8!important;" class="btn btn-success btn-size"><font style="font-size: 10px !important;">Set as Primary</font>
+                                                                            </a>
+                                                                            <a href="{{url('/shop-billing-setting/delete_credit/')}}/{{$card->id}}" style="background-color: #a832a4!important;" class="btn btn-success btn-size"><font style="font-size: 10px !important;">REMOVE</font>
+                                                                            </a>
+                                                                            @else
+                                                                            <a href="#!" class=""><font style="font-size: 12px !important;">Primary Account</font>
+                                                                            </a>
+                                                                            <a href="{{url('/shop-billing-setting/delete_credit/')}}/{{$card->id}}" style="background-color: #a832a4!important;" class="btn btn-success btn-size"><font style="font-size: 10px !important;">REMOVE</font>
+                                                                            </a>
+                                                                            @endif
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+                                                            <br>
+                                                        </div>
+                                                        <br>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         <div class="col-md-12">
                                             <div class="card card-default">
                                                 <div class="invoice padding-20 sm-padding-10">
@@ -189,6 +324,7 @@
     <script>
         
     </script>
+    
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
@@ -199,6 +335,110 @@
     <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
     <script src="http://cdn.datatables.net/plug-ins/1.10.15/dataRender/datetime.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    
+
+<script src="{{ URL::asset('new_assets/assets/plugins/jquery-datatable/media/js/dataTables.bootstrap.js')}}" type="text/javascript"></script>
+<script src="{{ URL::asset('new_assets/assets/plugins/jquery-datatable/extensions/Bootstrap/jquery-datatable-bootstrap.js')}}"
+    type="text/javascript"></script>
+<script src="{{ URL::asset('new_assets/assets/plugins/datatables-responsive/js/datatables.responsive.js')}}" type="text/javascript"></script>
+<script src="{{ URL::asset('new_assets/assets/plugins/jquery-inputmask/jquery.inputmask.min.js')}}" type="text/javascript"></script>
+<!-- END VENDOR JS -->
+<!-- BEGIN CORE TEMPLATE JS -->
+<!-- BEGIN CORE TEMPLATE JS -->
+<script src="{{ URL::asset('new_assets/pages/js/pages.js')}}"></script>
+<!-- END CORE TEMPLATE JS -->
+<!-- BEGIN PAGE LEVEL JS -->
+<!-- <script src="{{ URL::asset('new_assets/assets/js/scripts.js')}}" type="text/javascript"></script> -->
+<!-- END PAGE LEVEL JS -->
+<!-- END CORE TEMPLATE JS -->
+<!-- BEGIN PAGE LEVEL JS -->
+<!-- <script src="assets/js/dashboard.js" type="text/javascript"></script> -->
+<script>
+    $(document).ready(function (e) {
+    //For Card Number formatted input
+        var cardNum = document.getElementById('cr_no');
+        cardNum.onkeyup = function (e) {
+            if (this.value == this.lastValue) return;
+            var caretPosition = this.selectionStart;
+            var sanitizedValue = this.value.replace(/[^0-9]/gi, '');
+            var parts = [];
+            
+            for (var i = 0, len = sanitizedValue.length; i < len; i += 4) {
+                parts.push(sanitizedValue.substring(i, i + 4));
+            }
+            
+            for (var i = caretPosition - 1; i >= 0; i--) {
+                var c = this.value[i];
+                if (c < '0' || c > '9') {
+                    caretPosition--;
+                }
+            }
+            caretPosition += Math.floor(caretPosition / 4);
+            
+            this.value = this.lastValue = parts.join(' ');
+            this.selectionStart = this.selectionEnd = caretPosition;
+        }
+
+
+        var table = $('#tableTransactions');
+        table.dataTable({
+            "sDom": "<t><'row'<p i>>",
+            "destroy": true,
+            "scrollCollapse": true,
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ ",
+                "sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries"
+            },
+            "iDisplayLength": 5
+        });
+
+        // var _format = function (d) {
+        //     // `d` is the original data object for the row
+        //     return '<table class="table table-inline">' +
+        //         '<tr>' +
+        //         '<td>Learn from real test data <span class="label label-important">ALERT!</span></td>' +
+        //         '<td>USD 1000</td>' +
+        //         '</tr>' +
+        //         '<tr>' +
+        //         '<td>PSDs included</td>' +
+        //         '<td>USD 3000</td>' +
+        //         '</tr>' +
+        //         '<tr>' +
+        //         '<td>Extra info</td>' +
+        //         '<td>USD 2400</td>' +
+        //         '</tr>' +
+        //         '</table>';
+        // }
+
+        // // Add event listener for opening and closing details
+        // $('#tableTransactions tbody').on('click', 'tr', function () {
+        //     //var row = $(this).parent()
+        //     if ($(this).hasClass('shown') && $(this).next().hasClass('row-details')) {
+        //         $(this).removeClass('shown');
+        //         $(this).next().remove();
+        //         return;
+        //     }
+        //     var tr = $(this).closest('tr');
+        //     var row = table.DataTable().row(tr);
+
+        //     $(this).parents('tbody').find('.shown').removeClass('shown');
+        //     $(this).parents('tbody').find('.row-details').remove();
+
+        //     row.child(_format(row.data())).show();
+        //     tr.addClass('shown');
+        //     tr.next().addClass('row-details');
+        // });
+
+        //Date Pickers
+        $('#daterangepicker').daterangepicker({
+            timePicker: true,
+            timePickerIncrement: 30,
+            format: 'MM/DD/YYYY h:mm A'
+        }, function (start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+        });
+    });
+</script>
 
 @stop
 

@@ -515,7 +515,7 @@ Route::post('/complete_sa', 'ServiceAgreementController@complete_sa')->name('hom
 Route::get('/shop-billing-setting', 'clientCreditcardController@index')->name('home.credit.index');
 Route::post('/shop-billing-setting/add_credit', 'clientCreditcardController@store')->name('home.credit.add');
 Route::get('/shop-billing-setting/delete_credit/{id}', 'clientCreditcardController@destroy')->name('home.credit.delete');
-Route::get('/shop-billing-setting/edit_credit/{id}', 'clientCreditcardController@edit')->name('home.credit.edit');
+Route::get('/vendor/edit_credit/{id}', 'VendorController@edit_card');
 Route::post('/shop-billing-setting/update_credit/{id}', 'clientCreditcardController@update')->name('home.credit.update');
 Route::get('/shop-billing-setting/set_primary/{id}', 'clientCreditcardController@set_primary')->name('home.credit.set_primary');
 
