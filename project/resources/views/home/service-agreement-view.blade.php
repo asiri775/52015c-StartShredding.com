@@ -709,8 +709,8 @@ $(document).ready(function(){
   var exp_year = "{{$documents->credit_card_expire_year}}";
   $('#operation_from').val(operation_from);
   $('#operation_to').val(operation_to);
-  $('#credit_card_expire_month').val(credit_card_expire_month);
-  $('#credit_card_expire_year').val(credit_card_expire_year);
+  $('#credit_card_expire_month').val(exp_month);
+  $('#credit_card_expire_year').val(exp_year);
   function validate() {
         // Perform your validation here
         var isValid = true; // For demonstration purposes, always return true

@@ -580,6 +580,14 @@ class VendorController extends Controller
         }
     }
 
+    public function edit_card($id){
+
+        $card_detail = ClientCreditCard::find($id);
+        $user = Clients::find($card_detail->client_id);
+        $client = $user;
+        return view('vendor.billing-edit', compact('user','client', 'card_detail'));
+    }
+
     /**
      * Display the specified resource.
      *

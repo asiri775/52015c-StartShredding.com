@@ -30,14 +30,15 @@ class clientCreditcardController extends Controller
      */
     public function __construct()
     {
-        if (Auth::guard('profile')->guest()) {
-            return redirect('/shop-signin');
-        }
+        
     }
 
      
     public function index()
     {
+        if (Auth::guard('profile')->guest()) {
+            return redirect('/shop-signin');
+        }
         $userInfo = Auth::guard('profile')->user();
         $user = Clients::find($userInfo->id);
         $card_details = ClientCreditCard::where('client_id', $userInfo->id)->orderBy('id', 'desc')->get();
@@ -66,20 +67,21 @@ class clientCreditcardController extends Controller
      */
     public function store(Request $request)
     {
+        $this->middleware('auth:vendor');
         $validator = $this->validator($request->all());
         if($validator->fails()){
-            return redirect('/shop-billing-setting')->withErrors($validator);
+            return redirect()->back()->withErrors($validator);
         }
-        $userInfo = Auth::guard('profile')->user();
-        $user = Clients::find($userInfo->id);
+        $client_id = $request->client_id;
+        $user = Clients::find($client_id);
         $credit = new ClientCreditCard;
-        $credit['client_id'] = $userInfo->id;
+        $credit['client_id'] = $client_id;
         $credit['card_holder_name'] = $request->cardholder_name;
         $credit['card_number'] = $request->card_number;
         $credit['exp_month'] = $request->exp_month;
         $credit['exp_year'] = $request->exp_year;
         $credit['ccv'] = $request->ccv;
-        $is_primary = ClientCreditCard::where('client_id', $userInfo->id)->get();
+        $is_primary = ClientCreditCard::where('client_id', $client_id)->get();
         if(count($is_primary) == 0){
             $credit['is_primary'] = '1';
         }
@@ -88,7 +90,7 @@ class clientCreditcardController extends Controller
         }
         
         $credit->save();
-        return redirect('/shop-billing-setting')->with('message', 'Credit Card updated Successfully.');
+        return redirect()->back()->with('message', 'Credit Card updated Successfully.');
     }
 
     /**
@@ -110,10 +112,7 @@ class clientCreditcardController extends Controller
      */
     public function edit($id)
     {
-        $userInfo = Auth::guard('profile')->user();
-        $user = Clients::find($userInfo->id);
-        $card_detail = ClientCreditCard::find($id);
-        return view('home.shop.client_credit_card.edit', compact('user', 'card_detail'));
+        
     }
 
     /**
@@ -125,20 +124,21 @@ class clientCreditcardController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->middleware('auth:vendor');
         // $validator = $this->validator($request->all());
         // if($validator->fails()){
         //     return redirect('/shop-billing-setting')->withErrors($validator);
         // }
-        $userInfo = Auth::guard('profile')->user();
-        $user = Clients::find($userInfo->id);
+        
         $credit = ClientCreditCard::find($id);
+        $user = Clients::find($credit->client_id);
         $credit['card_holder_name'] = $request->cardholder_name;
         $credit['card_number'] = $request->card_number;
         $credit['exp_month'] = $request->exp_month;
         $credit['exp_year'] = $request->exp_year;
         $credit['ccv'] = $request->ccv;
         $credit->update();
-        return redirect('/shop-billing-setting')->with('message', 'Credit Card updated Successfully.');
+        return redirect('/vendor/customer/'.$user->id.'/billing')->with('message', 'Credit Card updated Successfully.');
     }
 
     /**
@@ -149,11 +149,12 @@ class clientCreditcardController extends Controller
      */
     public function destroy($id)
     {
-        $userInfo = Auth::guard('profile')->user();
+        $this->middleware('auth:vendor');
         $user = Clients::find($userInfo->id);
         $del_card = ClientCreditCard::find($id);
+        $user = Clients::find($del_card->client_id);
         $del_card->delete();
-        return redirect('/shop-billing-setting')->with('message', 'Credit Card deleted Successfully.');
+        return redirect()->back()->with('message', 'Credit Card deleted Successfully.');
     }
 
     protected function validator(array $data)
@@ -168,16 +169,16 @@ class clientCreditcardController extends Controller
     }
     public function set_primary($id)
     {
-        $userInfo = Auth::guard('profile')->user();
-        $user = Clients::find($userInfo->id);
-        $old_primary = ClientCreditCard::where('client_id', $userInfo->id)->where('is_primary', '1')->first();
+        $this->middleware('auth:vendor');
+        $new_primary = ClientCreditCard::find($id);
+        $user = Clients::find($new_primary->client_id);
+        $old_primary = ClientCreditCard::where('client_id', $user->id)->where('is_primary', '1')->first();
         if($old_primary){
             $old_primary['is_primary'] = '0';
             $old_primary->update();
         }
-        $new_primary = ClientCreditCard::find($id);
         $new_primary['is_primary'] = '1';
         $new_primary->update();
-        return redirect('/shop-billing-setting')->with('message', 'Primary Account set Successfully.');
+        return redirect()->back()->with('message', 'Primary Account set Successfully.');
     }
 }
