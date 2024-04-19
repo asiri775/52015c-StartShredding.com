@@ -150,7 +150,6 @@ class clientCreditcardController extends Controller
     public function destroy($id)
     {
         $this->middleware('auth:vendor');
-        $user = Clients::find($userInfo->id);
         $del_card = ClientCreditCard::find($id);
         $user = Clients::find($del_card->client_id);
         $del_card->delete();
