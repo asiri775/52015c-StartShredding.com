@@ -182,8 +182,11 @@ $urlTime = '';
                                 </div>
                             </div>
                         @endif
-                        <div class="row" style="align-items:right;">
-                            <div class="col-md-12">
+                        
+                    </div>
+                    <div class="row" style="align-items:right;">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
                                 <a class="btn btn-primary btn-right"
                                     onclick="printPage( '{{route('vendor.order.print', ['id' => $order->id])}}' )"
                                     href="javascript:void(0);"></i> <span class="bold">PRINT</span></a>
@@ -193,12 +196,15 @@ $urlTime = '';
                                 </button>
                                 <?php
                                     $service_agreement = ServiceAgreement::where('order_id', $order->id)->first();
-                                 ?>
-                                @if(is_null($service_agreement) )
-                                    <a href="{!! url('vendor/sa_link/'.$order->id) !!}" class="btn btn-success btn-right">Service Agreement link</a>
+                                ?>
+                                @if(is_null($service_agreement) || $service_agreement->sa_state == "0" )
+                                    <a href="{!! url('vendor/sa_link/'.$order->id) !!}" style="background-color: #6232a8!important;" class="btn btn-warning">Send Agreement</a>
+                                    <button href="" class="btn btn-success" type="button" disabled>View Agreement</button>
                                 @elseif($service_agreement->sa_state == 1)
-                                    <a href="{!! url('vendor/service_agreement/'.$order->id) !!}" class="btn btn-success btn-right">Edit Service Agreement</a>
+                                    <button  class="btn btn-success" type="button" style="background-color: #6232a8!important;"  disabled>Send Agreement</button>
+                                    <a href="{!! url('vendor/service_agreement/'.$order->id) !!}" class="btn btn-success">View Agreement</a>
                                 @endif
+                                
                             </div>
                         </div>
                     </div>
