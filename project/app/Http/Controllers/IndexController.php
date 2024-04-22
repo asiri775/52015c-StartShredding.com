@@ -615,8 +615,7 @@ class IndexController extends Controller
         $userInfo = Auth::guard('profile')->user();
         $user = Clients::find($userInfo->id);
         $orders = Order::where('orders.customerid', $userInfo->id)->orderBy('booking_date', 'desc')
-                 ->join('service_agreements','orders.id','=', 'service_agreements.order_id')
-                 ->select('orders.*', 'service_agreements.sa_state')->get();
+                 ->select('orders.*')->get();
         $credits_details = Transactions::where('user_id', $userInfo->id)->orderBy('id', 'desc')->get();
         return view('home.shop.my_orders', compact('user', 'orders', 'credits_details'));
     }
@@ -1262,9 +1261,16 @@ class IndexController extends Controller
         $userInfo = Auth::guard('profile')->user();
         $user = Clients::find($userInfo->id);
         $customer = Clients::find($userInfo->id);
-        $documents = ServiceAgreement::where('order_id', $id)->first();
-        
         $order = Order::find($id);
+        if($order->customerid != $user->id){
+            return redirect('shop-documents-list');
+        }
+        
+        $documents = ServiceAgreement::where('order_id', $id)->first();
+        if($documents->sa_state == "1"){
+            return redirect('shop-documents-list');
+        }
+        
         $order_details =DB::table('ordered_products')
                         ->join('products', 'products.id', '=', 'ordered_products.productid')
                         ->select('ordered_products.*','products.title')

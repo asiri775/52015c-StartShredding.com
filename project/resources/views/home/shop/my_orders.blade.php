@@ -25,8 +25,6 @@
                                     <th  class="all-caps">Amount</th>
                                     <th class="all-caps">Status <i class="fa fa-question-circle"
                                                                    style="color:white;" aria-hidden="true"></i></th>
-                                    <th class="all-caps">Service Agreement <i class="fa fa-file"
-                                                                   style="color:white;" aria-hidden="true"></i></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -60,27 +58,6 @@
                                                 </button>
                                             </td>
                                         @endif
-                                        @if($order->sa_status == '1')
-                                            <td class="fs-12">
-                                            
-                                                <a href="{!!url('/shop-documents/'.$document->id)!!}" class="btn complete-btn btn-cons btn-block"
-                                                        type="button"><span>completed</span>
-                                                </a>
-                                            </td>
-                                        @elseif($order->doc_id != "")
-                                            <td class="fs-12">
-                                            
-                                                <a href="#" class="btn complete-btn btn-cons btn-block"
-                                                        type="button"><span>completed</span>
-                                                </a>
-                                            </td>
-                                        @else
-                                            <td class="fs-12">
-                                                <button class="btn schedule-btn btn-cons btn-block"
-                                                        type="button"><span>incompleted</span>
-                                                </button>
-                                            </td>
-                                        @endif
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -111,8 +88,7 @@
                     { "width": "30%" },
                     { "width": "30%" },
                     { "width": "30%" },
-                    { "width": "20%" },
-                    { "width": "20%" },
+                    { "width": "30%" },
                 ],
                 "oLanguage": {
                     "sLengthMenu": "_MENU_ ",

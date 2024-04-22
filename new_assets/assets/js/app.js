@@ -137,7 +137,7 @@ saveJPGButton.addEventListener("click", () => {
       xhr.onload = function() {
         window.parent.document.getElementById('save_flag').value = 1;
         // result = JSON.parse(this.responseText);
-        alert(this.responseText);
+        alert('Signature saved succeessfully');
       }
       xhr.open("POST", "/save_signature");
       xhr.send(formData);

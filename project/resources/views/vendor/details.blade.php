@@ -198,10 +198,10 @@ $urlTime = '';
                                     $service_agreement = ServiceAgreement::where('order_id', $order->id)->first();
                                 ?>
                                 @if(is_null($service_agreement) || $service_agreement->sa_state == "0" )
-                                    <a href="{!! url('vendor/sa_link/'.$order->id) !!}" style="background-color: #6232a8!important;" class="btn btn-warning">Send Agreement</a>
-                                    <button href="" class="btn btn-success" type="button" disabled>View Agreement</button>
+                                    <a href="{!! url('vendor/sa_link/'.$order->id) !!}" style="background-color: #6232a8!important;" class="btn btn-success">Send Agreement</a>
+                                    <button href="" class="btn btn-success" type="button" style="background-color: #D3D3D3!important;" disabled>View Agreement</button>
                                 @elseif($service_agreement->sa_state == 1)
-                                    <button  class="btn btn-success" type="button" style="background-color: #6232a8!important;"  disabled>Send Agreement</button>
+                                    <button  class="btn" type="button" style="background-color: #D3D3D3!important;"  disabled>Send Agreement</button>
                                     <a href="{!! url('vendor/service_agreement/'.$order->id) !!}" class="btn btn-success">View Agreement</a>
                                 @endif
                                 
