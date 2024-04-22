@@ -78,7 +78,7 @@ class ServiceAgreementController extends Controller {
                 unlink($_SERVER['DOCUMENT_ROOT'] . "/photos/".$order_id.'.jpg');
             }
             $success = file_put_contents($_SERVER['DOCUMENT_ROOT'] . "/photos/".$order_id.'.jpg', $data);
-            echo $success?json_encode('Save successfully'):json_encode("Unable to save the image");
+            return $success?json_encode('Save successfully'):json_encode("Unable to save the image");
             
         }
         else {

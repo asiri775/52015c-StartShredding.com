@@ -938,9 +938,9 @@ class VendorController extends Controller
                 $validator = Validator::make(['order_id' => $order->id], [
                     'order_id' => 'required|max:255|unique:service_agreements'
                 ]);
+                
                 if ($validator->fails()) {
-                    return redirect('/vendor/orders')
-                                ->withErrors($validator);
+                    return redirect('/vendor/orders')->with('message', 'Service Agreement link Sent Successfully.');
                 }
         
                 $serviceAgreement = ServiceAgreement::Create([
