@@ -113,6 +113,7 @@
                                             foreach ($getOrderProducts as $orderDetails) {
                                             if($orderDetails != null){
                                             $productDetail = DB::select("select * from products where id='$orderDetails->productid'");
+                                            if(count($productDetail) > 0){
                                             ?>
                                             <tr>
                                                 <td class="v-align-middle text-left">{{$productDetail[0]->title}}
@@ -124,6 +125,7 @@
                                                 </td>
                                             </tr>
                                             <?php
+                                            }
                                             }
                                             }
                                             }

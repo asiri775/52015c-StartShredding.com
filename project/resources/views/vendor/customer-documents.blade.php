@@ -105,32 +105,37 @@
                                                     <table class="table table-bordered w-100" id="documents-table">
                                                     <thead>
                                                         <tr class="text-center">
-                                                            <th  class="all-caps">Date</th>
                                                             <th style=" white-space: nowrap;" class="all-caps">Order ID</th>
-                                                            <th  class="all-caps">Company Name</th>
-                                                            <th  class="all-caps">Contact Name</th>
-                                                            <th  class="all-caps">From</th>
-                                                            <th  class="all-caps">To</th>
+                                                            <th  class="all-caps">Service Date</th>
+                                                            <th  class="all-caps">Client</th>
                                                             <th  class="all-caps">Amount</th>
                                                             <th class="all-caps">Status <i class="fa fa-question-circle"
                                                                                         style="color:white;" aria-hidden="true"></i></th>
+                                                            <th  class="all-caps">Action</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
                                                             @foreach($documents as $document)
                                                                 @if($document->sa_state == 1)
                                                                 <tr class="text-center">
-                                                                    <td class="fs-12">{{date('m/d/Y', strtotime($document->created_at))}}</td>
                                                                     <td class="fs-12">{{$document->order_id}}</td>
-                                                                    <td class="fs-12">{{$document->company_name}}</td>
+                                                                    <td class="fs-12">{{date('m/d/Y', strtotime($document->booking_date))}}</td>
                                                                     <td class="fs-12">{{$document->contact_name}}</td>
-                                                                    <td class="fs-12">{{$document->operation_from}}</td>
-                                                                    <td class="fs-12">{{$document->operation_to}}</td>
-                                                                    <td class="fs-12">{{$settings[0]->currency_sign}}{{ number_format($document->make_it_count, 2) }}</td>
-                                                                    
+                                                                    <td class="fs-12">{{$settings[0]->currency_sign}}{{number_format($document->pay_amount, 2)}}</td>
                                                                     <td class="fs-12">
                                                                         <a href="{!!url('/vendor/service_agreement/'.$document->order_id)!!}" class="btn complete-btn btn-success btn-cons btn-block"
                                                                                 type="button"><span>Completed</span>
+                                                                        </a>
+                                                                    </td>
+                                                                    <td class="fs-12">
+                                                                        <a href="{!!url('/vendor/service_agreement_email/'.$document->order_id)!!}" class="btn btn-warning">
+                                                                            <i class="fa fa-envelope"></i>
+                                                                        </a>
+                                                                        <a href="{!!url('/vendor/service_agreement_download/'.$document->order_id)!!}" class="btn btn-info">
+                                                                            <i class="fa fa-download"></i>
+                                                                        </a>
+                                                                        <a href="javascript:void(0);" onclick="printPage( '{{route('vendor.service_agreement.print', ['id' => $document->order_id])}}' )" class="btn btn-primary">
+                                                                            <i class="fa fa-print"></i>
                                                                         </a>
                                                                     </td>
                                                                     
@@ -161,6 +166,19 @@
                 "pageLength": 15
             });
         });
+        function printPage(url) {
+        if (url) {
+            var w = window.open(url, 'print page', 'height=900,width=800');
+            if (window.focus) {
+                w.focus()
+            }
+            w.window.print();
+            setTimeout(function () {
+                w.window.close();
+            }, 2000);
+            return false;
+        }
+    }
         /* $(function () {
             $.urlParam = function (name) {
                 var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);

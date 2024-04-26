@@ -153,9 +153,15 @@ Route::any('/vendor/customers', 'VendorController@customers');
 
 
 Route::get('/vendor/details/{id}', 'VendorController@details');
-Route::get('/vendor/sa_link/{id}', 'VendorController@sa_link');
+Route::post('/vendor/sa_link', 'VendorController@sa_link');
+
+
+
+
 Route::get('/vendor/order_print/{id}', 'VendorController@order_print')->name('vendor.order.print');
 Route::get('/vendor/order_download/{id}', 'VendorController@orderDownload')->name('vendor.order.download');
+Route::get('/vendor/customer_order_print/{id}', 'VendorController@customer_orderPrint')->name('vendor.customer_order.print');
+Route::get('/vendor/customer_order_download/{id}', 'VendorController@customer_orderDownload')->name('vendor.customer_order.download');
 
 
 Route::get('/vendor/plant', 'VendorController@plant');
@@ -491,6 +497,8 @@ Route::get('/shop-refer-friend', 'IndexController@referFriend')->name('home.user
 // Route::get('/shop-billing-setting', 'IndexController@billingSetting')->name('home.user-billing-setting');
 Route::get('/shop-documents-list', 'IndexController@documentsList')->name('home.user-documents-list');
 Route::get('/shop-documents/{id}', 'IndexController@documentsDetail')->name('home.user-documents-detail');
+Route::get('/document_download/{id}', 'IndexController@document_download')->name('home.user-documents-download');
+Route::get('/document_print/{id}', 'IndexController@document_print')->name('home.user-documents-print');
 
 
 Route::post('/shop-send-refer-mail', 'IndexController@sendReferMail')->name('shop-user-send-refer-mail');
@@ -509,6 +517,7 @@ Route::get('/shop-order-summary', 'IndexController@orderSummary')->name('home.su
 
 Route::post('/save_signature', 'ServiceAgreementController@save_sign');
 Route::post('/complete_sa', 'ServiceAgreementController@complete_sa')->name('home.complete_sa');
+Route::get('/confirm_service/{token}', 'ServiceAgreementController@confirm_link')->name('confirm.service');
 
 // Client Credit Card
 

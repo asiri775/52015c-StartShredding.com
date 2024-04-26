@@ -41,6 +41,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use DateTime;
 use App\Mail\UserPassResetShopMail;
 use App\Mail\QuoteRequestVendorMail;
+use Illuminate\Support\Facades\Crypt;
 
 class IndexController extends Controller
 {
@@ -1243,7 +1244,7 @@ class IndexController extends Controller
         $user = Clients::find($userInfo->id);
         $documents = DB::table('service_agreements')
                 ->join('orders', 'service_agreements.order_id', '=', 'orders.id')
-                ->select('service_agreements.*')
+                ->select('service_agreements.*','orders.booking_date', 'orders.pay_amount')
                 ->where('orders.customerid', $userInfo->id)
                 ->get();
         return view('home.shop.documents.index', compact('user','documents'));
@@ -1267,9 +1268,7 @@ class IndexController extends Controller
         }
         
         $documents = ServiceAgreement::where('order_id', $id)->first();
-        if($documents->sa_state == "1"){
-            return redirect('shop-documents-list');
-        }
+        
         
         $order_details =DB::table('ordered_products')
                         ->join('products', 'products.id', '=', 'ordered_products.productid')
@@ -1280,7 +1279,8 @@ class IndexController extends Controller
         if($documents->sa_state == '1'){
             return view('home.service-agreement-view', compact('user', 'customer','documents', 'order','order_details','card_details'));
         }
-        return view('home.service-agreement', compact('user', 'customer','documents', 'order','order_details','card_details'));
+            // return view('home.customer_service_agreement_download', compact('user', 'customer','documents', 'order','order_details','card_details'));
+
     }
 
 
@@ -1576,4 +1576,49 @@ class IndexController extends Controller
         Session::put('quantity', $request->quantity);
         return redirect()->route('home.order.product', $request->product_id);
     }
+    public function document_download($id){
+
+        if (Auth::guard('profile')->guest()) {
+            return redirect('/shop-signin');
+        }
+        $userInfo = Auth::guard('profile')->user();
+        $user = Clients::find($userInfo->id);
+        $customer = Clients::find($userInfo->id);
+        $order = Order::find($id);
+        
+        $documents = ServiceAgreement::where('order_id', $id)->first();
+        
+        $booking_date = date('mdy', strtotime($order->booking_date));
+        $order_details =DB::table('ordered_products')
+                        ->join('products', 'products.id', '=', 'ordered_products.productid')
+                        ->select('ordered_products.*','products.title')
+                        ->where('ordered_products.orderid', $order->id)
+                        ->get();
+        $card_details = ClientCreditCard::where('client_id', $userInfo->id)->get();
+        $pdf = PDF::loadView('home.customer_service_agreement_download', compact('user', 'customer','documents', 'order','order_details','card_details'));
+        return $pdf->download('SA' . $order->id . '_' . ucwords($user->first_name) . ucwords($user->last_name) ."_".$booking_date. '.pdf');
+    }
+
+    public function document_print($id){
+
+        if (Auth::guard('profile')->guest()) {
+            return redirect('/shop-signin');
+        }
+        $userInfo = Auth::guard('profile')->user();
+        $user = Clients::find($userInfo->id);
+        $customer = Clients::find($userInfo->id);
+        $order = Order::find($id);
+        
+        $documents = ServiceAgreement::where('order_id', $id)->first();
+        
+        $booking_date = date('mdy', strtotime($order->booking_date));
+        $order_details =DB::table('ordered_products')
+                        ->join('products', 'products.id', '=', 'ordered_products.productid')
+                        ->select('ordered_products.*','products.title')
+                        ->where('ordered_products.orderid', $order->id)
+                        ->get();
+        $card_details = ClientCreditCard::where('client_id', $userInfo->id)->get();
+        return view('home.customer_service_agreement_print', compact('user', 'customer','documents', 'order','order_details','card_details'));
+    }
+    
 }

@@ -24,20 +24,8 @@ $urlTime = '';
 @extends('vendor.includes.master-vendor')
 
 @section('content')
-    <div class="row">
-        @if (Session::has('message'))
-            <div class="alert alert-success alert-dismissable">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                {{ Session::get('message') }}
-            </div>
-        @endif
-        @if (Session::has('error'))
-            <div class="alert alert-danger alert-dismissable">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                {{ Session::get('error') }}
-            </div>
-        @endif
-    </div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+    
     <style>
         @media only screen and (max-width: 767px) {
             .mb_left {
@@ -198,7 +186,7 @@ $urlTime = '';
                                     $service_agreement = ServiceAgreement::where('order_id', $order->id)->first();
                                 ?>
                                 @if(is_null($service_agreement) || $service_agreement->sa_state == "0" )
-                                    <a href="{!! url('vendor/sa_link/'.$order->id) !!}" style="background-color: #6232a8!important;" class="btn btn-success">Send Agreement</a>
+                                    <a  style="background-color: #6232a8!important;" id="sa_link" class="btn btn-success">Send Agreement</a>
                                     <button href="" class="btn btn-success" type="button" style="background-color: #D3D3D3!important;" disabled>View Agreement</button>
                                 @elseif($service_agreement->sa_state == 1)
                                     <button  class="btn" type="button" style="background-color: #D3D3D3!important;"  disabled>Send Agreement</button>
@@ -214,7 +202,45 @@ $urlTime = '';
             </div>
         </div>
     </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js" type="text/javascript"></script>
 <script>
+    $(document).ready(function(){
+        $('#sa_link').click(function sa_link(){
+            $.blockUI({ message: '<img src="/assets/images/loader.gif"/>', css: {
+				padding:	0,
+				margin:		0,
+				width:		'30%',
+				top:		'40%',
+				left:		'35%',
+				textAlign:	'center',
+				color:		'',
+				border:		'',
+				backgroundColor:'',
+				cursor:		'wait'
+			},});
+            $.post('/vendor/sa_link',
+            {
+                _token: "<?php echo csrf_token(); ?>",
+                id: "<?php echo $order->id ?>"
+            },
+            function(data, status){
+                $.unblockUI();
+                var text = JSON.parse(data);
+                if(text.message != undefined){
+                    toastr.options.timeOut = 1500;
+                    toastr.success(text.message);
+                }
+                console.log(text.errors);
+                if(text.errors != undefined){
+                    toastr.options.timeOut = 1500;
+                    toastr.error(text.errors);
+                }
+            });
+        });
+        
+    });
+
     function printPage(url) {
         if (url) {
             var w = window.open(url, 'print page', 'height=900,width=800');

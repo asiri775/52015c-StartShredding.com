@@ -1,6 +1,6 @@
 {
     "fontawesome": {
-        "normal": "fontawesome_normal_d0c6fd6ee2a6ba6e1ecaeb9ce3707923"
+        "normal": "fontawesome_normal_71b8d1914d978aad1e592ef300b0c269"
     },
     "pages-icon": {
         "normal": "pages_icon_normal_fd5b66c9dd2cc308b7a1ac22ce12f589"
@@ -13,5 +13,12 @@
     },
     "tf-bold": {
         "normal": "tf_bold_normal_c4877ed39d7c0309688bfd976590e77f"
+    },
+    "glyphicons halflings": {
+        "normal": "glyphicons_halflings_normal_c68e6d59b0ba64b5e2b795a5c45785a7"
+    },
+    "poppins": {
+        "300": "F:\\xampp\\htdocs\\52015c-StartShredding.com\\project\\storage\\fonts\/poppins_300_56a45aadd6f4717d0b29e006a9a82359",
+        "bold": "poppins_bold_cc53e8e8659afa950c49e4494cbb2708"
     }
 }

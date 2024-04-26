@@ -348,6 +348,38 @@
                 </ol>
             </div>
         </div>
+        <div class="col-md-12">
+            <div class="row clearfix mb-1">
+                <div class="col-md-6">
+                    <div class="main-title mt-4">
+                        <h3 class="font-montserrat bold fs-16 bold all-caps no-margin">Card Details</h3>
+                    </div>
+                    <div>
+                        <label>Card Holder Name : <?php echo $documents->credit_card_name ?></label>
+                    </div>
+                    <div>
+                        <label>Card Number : <?php echo $documents->credit_card_number ?></label>
+                    </div>
+                    <div>
+                        <label>Expiry :
+                            <?php echo $documents->credit_card_expire_month ?>/<?php echo $documents->credit_card_expire_year ?></label>
+                    </div>
+                    <div>
+                        <label>CCV : <?php echo $documents->credit_card_ccv ?></label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="main-title mb-3">
+                        <h3 class="">Digital Signature
+                        </h3>
+                    </div>
+                    <div class="">
+                        <img src="{{asset('/photos').'/'.$documents->order_id.'.jpg'}}">
+                        <label>Signature : {{$documents->credit_card_name}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </div>

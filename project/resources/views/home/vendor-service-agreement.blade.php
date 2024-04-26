@@ -118,14 +118,14 @@
       <div class="main-title mt-4 ml-1 col-md-6">
         <h3 class="font-montserrat bold fs-16 bold all-caps no-margin">Shipping Address</h3>
       </div>
-      <div class="serv-check justify-content-between d-inline-flex w-100 col-md-6">
+      <!-- <div class="serv-check justify-content-between d-inline-flex w-100 col-md-6">
         <div class="form-check primary mt-1">
           <input type="checkbox" onclick="checkBox(this)" id="defaultCheck">
           <label for="defaultCheck" class="bold">
             Same as Billing
           </label>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="row clearfix mb-1">
       
@@ -163,21 +163,21 @@
       <div class="col-md-4">
         <div class="form-group form-group-default required">
           <label>Phone (*)</label>
-          <input type="text" class="form-control" id="shipp-phoneNumber" name="shippig_phone" id="phoneNumber3" value="<?php echo $documents->shippig_phone?>" value="" placeholder="(999)-999-9999" required>
+          <input type="text" class="form-control" id="shipp-phoneNumber" name="shipping_phone" id="phoneNumber3" value="<?php echo $documents->shipping_phone?>" value="" placeholder="(999)-999-9999" required>
         </div>
       </div>
       <div class="col-md-4">
         <div class="form-group form-group-default required">
           <label>Email</label>
-            <input type="email" class="form-control" id="shipp-email" name="shippig_email" value="<?php echo $documents->shippig_email?>" placeholder="joan@lifeforcephysio.com">
+            <input type="email" class="form-control" id="shipp-email" name="shipping_email" value="<?php echo $documents->shipping_email?>" placeholder="joan@lifeforcephysio.com">
           </div>
       </div>
     </div>
-    <div class="row">
+    <!-- <div class="row">
       <button  aria-label="" id="confirm_form" class="btn btn-primary btn-cons from-left pull-right" type="submit">
         <span>Confirm</span>
       </button>
-    </div>
+    </div> -->
     
   </form>
 </div>
@@ -399,6 +399,38 @@
       </div>
     </div> -->
   </div>
+  <div class="col-md-12">
+                        <div class="row clearfix mb-1">
+                            <div class="col-md-6">
+                                <div class="main-title mt-4">
+                                    <h3 class="font-montserrat bold fs-16 bold all-caps no-margin">Card Details</h3>
+                                </div>
+                                <div>
+                                    <label>Card Holder Name : <?php echo $documents->credit_card_name ?></label>
+                                </div>
+                                <div>
+                                    <label>Card Number : <?php echo $documents->credit_card_number ?></label>
+                                </div>
+                                <div>
+                                    <label>Expiry :
+                                        <?php echo $documents->credit_card_expire_month ?>/<?php echo $documents->credit_card_expire_year ?></label>
+                                </div>
+                                <div>
+                                    <label>CCV : <?php echo $documents->credit_card_ccv ?></label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="main-title mt-4">
+                                    <h3 class="">Digital Signature
+                                    </h3>
+                                </div>
+                                <div class="">
+                                    <img src="{{asset('/photos').'/'.$documents->order_id.'.jpg'}}">
+                                    <label>Signature : {{$documents->credit_card_name}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 </div>
 </div>
 
@@ -428,20 +460,20 @@ $(document).ready(function(){
         e.preventDefault();  //stop the browser from following
         window.location.href = '/vendor/service_agreement_download/<?php echo $order->id;?>';
     });
-  function checkBox(){
-  if ($('#defaultCheck').is(':checked')) {
-     $('#shipp-firstName').val($('#bill-firstName').val());
-     $('#shipp-lastName').val($('#bill-lastName').val());
-     $('#shipp-city').val($('#bill-city').val());
-     $('#shipp-state').val($('#bill-state').val());
-     $('#shipp-postal').val($('#bill-postal').val());
-     $('#shipp-phoneNumber').val($('#bill-phoneNumber').val());
-     $('#shipp-email').val($('#bill-email').val());
+//   function checkBox(){
+//   if ($('#defaultCheck').is(':checked')) {
+//      $('#shipp-firstName').val($('#bill-firstName').val());
+//      $('#shipp-lastName').val($('#bill-lastName').val());
+//      $('#shipp-city').val($('#bill-city').val());
+//      $('#shipp-state').val($('#bill-state').val());
+//      $('#shipp-postal').val($('#bill-postal').val());
+//      $('#shipp-phoneNumber').val($('#bill-phoneNumber').val());
+//      $('#shipp-email').val($('#bill-email').val());
      
-  } else {
-    $('#shipp-firstName,#shipp-lastName,#shipp-city,#shipp-state,#shipp-postal,#shipp-phoneNumber,#shipp-email').val('');
-  }
+//   } else {
+//     $('#shipp-firstName,#shipp-lastName,#shipp-city,#shipp-state,#shipp-postal,#shipp-phoneNumber,#shipp-email').val('');
+//   }
 
-}
+// }
 </script>
 @endsection
