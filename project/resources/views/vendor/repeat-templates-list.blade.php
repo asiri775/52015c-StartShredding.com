@@ -143,7 +143,6 @@
 	                                      AND status = "job_status_scheduled" AND booking_date >= "' . date('Y-m-d') . '"');
                             $completed = DB::select('SELECT COUNT(*) AS REC_COUNT FROM orders WHERE template_id = ' . $order->template_id . '
 	                                      AND status = "job_status_completed"');
-                            $orderdet = App\Order::where('id', $order->id)->first();
                             ?>
                             <tr>
                                 <td><a href="/vendor/order-template/<?=$order->template_id;?>" target="_blank"><?=$order->template_name;?></a></td>
@@ -156,7 +155,7 @@
                                 <td><?echo isset($scheduled) ? $scheduled['REC_COUNT'] : '';?></td>
                                 <td><?echo isset($completed) ? $completed['REC_COUNT'] : '';?></td>
                                 <td>
-                                    <input type="checkbox" name="chk_isActive[]" value="{{$order->id}}" <?php echo ($order->is_active)?'checked="checked"':''; ?>>
+                                    <input type="checkbox" name="chk_isActive[]" value="{{$order->template_id}}" <?php echo ($order->is_active)?'checked="checked"':''; ?>>
                                 </td>
                             </tr>
                             <?php

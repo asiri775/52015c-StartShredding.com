@@ -15,6 +15,7 @@ use App\VendorCustomers;
 use App\OrderInquiry;
 use App\ServiceAgreement;
 use App\ClientCreditCard;
+use App\OrderTemplateItem;
 use App\Mail\ServiceAgreementMail;
 use App\Mail\ServiceAgreementPDFMail;
 use App\Models\Upload_document;
@@ -28,6 +29,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Crypt;
 
 class VendorController extends Controller
 {
@@ -558,7 +561,7 @@ class VendorController extends Controller
         $documents =DB::table('clients')
                         ->join('orders', 'clients.id', '=', 'orders.customerid')
                         ->join('service_agreements', 'orders.id', '=', 'service_agreements.order_id')
-                        ->select('service_agreements.*')
+                        ->select('service_agreements.*', 'orders.booking_date', 'orders.pay_amount')
                         ->where('clients.id', $id)
                         ->get();
 
@@ -918,20 +921,34 @@ class VendorController extends Controller
 
     }
 
-    public function sa_link($id)
+    public function sa_link(Request $request)
     {
+        $id = $request->id;
         $vendorId = Auth::user()->id;
         $order = Order::findOrFail($id);
         
         $user = Clients::find($order->customerid);
         if(count($order->get()) != 0){
 
-            $serverUrl = url('/');
+            // $serverUrl = url('/');
 
-            $link = $serverUrl."/shop-documents/".$id;
+            // $link = $serverUrl."/shop-documents/".$id;
+            $userData = [
+                'user_id' => $user->id,
+                'order_id' => $order->id
+            ];
+
+            $token = Crypt::encryptString(json_encode($userData));
+            $order->token = $token;
+            $order->update();
+            $url = URL::temporarySignedRoute(
+                'confirm.service', 
+                now()->addHours(24), // Expiry time
+                ['token' => $token] // Additional parameters
+            );
             try {
                 // Send the email
-                Mail::to($user->email)->send(new ServiceAgreementMail($id, $link));
+                Mail::to($user->email)->send(new ServiceAgreementMail($id, $url));
                 $userAddressSplitted = explode(", ", $order->customer_address, 1); 
                 $shippingAddressSplitted = $order->shipping_address? 
                     explode(", ", $order->shipping_address, 1): $userAddressSplitted;
@@ -940,7 +957,8 @@ class VendorController extends Controller
                 ]);
                 
                 if ($validator->fails()) {
-                    return redirect('/vendor/orders')->with('message', 'Service Agreement link Sent Successfully.');
+                    // return redirect()->back()->with('message', 'Service Agreement link Sent Successfully.');
+                    return json_encode(['message' => 'Service Agreement link Sent Successfully.']);
                 }
         
                 $serviceAgreement = ServiceAgreement::Create([
@@ -965,14 +983,17 @@ class VendorController extends Controller
                     "order_id" => $order->id,
                     "sa_state" => '0'
                 ]);
-                return redirect('/vendor/orders')->with('message', 'Service Agreement link Sent Successfully.');
+                // return redirect()->back()->with('message', 'Service Agreement link Sent Successfully.');
+                return json_encode(['message' => 'Service Agreement link Sent Successfully.']);
             } catch (\Exception $e) {
                 // Error occurred while sending email
-                return redirect('/vendor/orders')->with('message', 'Service Agreement link Sent Failed.');
+                // return redirect()->back()->with('errors', 'Service Agreement link Sent Failed.');
+                return json_encode(['errors' => 'Service Agreement link Sent Failed.']);
             }
         }
         else {
-            return redirect('/vendor/orders');
+            // return redirect()->back()->with('errors', 'Service Agreement link Sent Failed.');
+            return json_encode(['errors' => 'Service Agreement link Sent Failed.']);
         }
         
     }
@@ -1053,8 +1074,10 @@ class VendorController extends Controller
         view()->share('order', $order);
         view()->share('order_details', $order_details);
         // return view('vendor.service_agreement_download');
+        
+        $booking_date = date('mdy', strtotime($order->booking_date));
         $pdf = PDF::loadView('vendor.service_agreement_download',compact('order','documents', 'order_details'));
-        return $pdf->download('service_agreement:order#' . $order->id . '.pdf');
+        return $pdf->download('SA'.$order->id.'_'.ucwords($user->first_name) . ucwords($user->last_name).'_'.$booking_date.'.pdf');
     }
 
     
@@ -1079,12 +1102,14 @@ class VendorController extends Controller
         $pdfContent = $pdf->output();
 
         // Save PDF to storage
-
-        $pdfPath = storage_path('app/document.pdf');
+        $booking_date = date('mdy', strtotime($order->booking_date));
+        $pdfPath = storage_path('app/SA'.$order->id.'_'.ucwords($user->first_name) . ucwords($user->last_name).'_'.$booking_date.'.pdf');
+        if(file_exists($pdfPath)){
+            unlink($pdfPath);
+        }
         file_put_contents($pdfPath, $pdfContent);
         try {
             Mail::to($user->email)->send(new ServiceAgreementPDFMail($order, $documents, $order_details, $pdfPath));
-            unlink($pdfPath);
             return redirect()->back()->with('message', 'Email sent Successfully');
         } catch (\Throwable $th) {
             return redirect()->back()->with('message', 'Email sent Failed');
@@ -1195,7 +1220,7 @@ class VendorController extends Controller
     {
         $order = Order::findOrFail($id);
         if ($order != null) {
-
+            return false;
         }
         $model = DB::select("select * from ordered_products where orderid='$id'");
         $orderCheck=Order::where("id",$id)->where("order_type",3)->first();
@@ -1212,6 +1237,40 @@ class VendorController extends Controller
             return $pdf->download('order' . $order->id . '.pdf');
         }
         //return view('shop.order_pdf',compact('user','order','multiple_address'))->render();
+    }
+
+    public function customer_orderDownload($id)
+    {
+        $order = Order::findOrFail($id);
+        if($order->order_type == 3){
+            $products = OrderTemplateItem::where('order_template_id', $order->template_id)->get();
+            // return view('vendor.custom_order_pdf', compact('order', 'products'));
+            $pdf = PDF::loadview('vendor.customer_order_pdf', compact('order', 'products'));
+            return $pdf->download('order#' . $order->id . '.pdf');
+        }
+        else {
+            $products = OrderedProducts::where('orderid', $id)->get();
+            // return view('vendor.ordertemplate-order-show', compact('order', 'products'));
+            $pdf = PDF::loadview('vendor.customer_order2_pdf', compact('order', 'products'));
+            return $pdf->download('order#' . $order->id . '.pdf');
+        }
+    }
+
+    public function customer_orderPrint($id)
+    {
+        $order = Order::findOrFail($id);
+        if($order->order_type == 3){
+            $products = OrderTemplateItem::where('order_template_id', $order->template_id)->get();
+            return view('vendor.customer_order_print', compact('order', 'products'));
+            // $pdf = PDF::loadview('vendor.customer_order_pdf', compact('order', 'products'));
+            // return $pdf->download('order#' . $order->id . '.pdf');
+        }
+        else {
+            $products = OrderedProducts::where('orderid', $id)->get();
+            return view('vendor.customer_order2_print', compact('order', 'products'));
+            // $pdf = PDF::loadview('vendor.customer_order2_pdf', compact('order', 'products'));
+            // return $pdf->download('order#' . $order->id . '.pdf');
+        }
     }
 
 }

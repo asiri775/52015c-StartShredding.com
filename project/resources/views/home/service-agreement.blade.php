@@ -213,7 +213,7 @@
                                   <div class="col-md-4">
                                     <div class="form-group form-group-default required">
                                       <label>Postal Code</label>
-                                      <input type="text" class="form-control client_info" id="bill-postal" name="postal"  placeholder="M9C 2Y3" required>
+                                      <input type="text" class="form-control client_info" id="bill-postal" name="postal" value="<?php echo $customer->zip?>"  placeholder="M9C 2Y3" required>
                                     </div>
                                   </div>
                                 </div>

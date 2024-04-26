@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
+use App\ClientCreditCard;
 
 class ServiceAgreementController extends Controller {
 
@@ -59,31 +62,24 @@ class ServiceAgreementController extends Controller {
 
     public function save_sign()
     {
-        $user = Clients::find(Auth::user()->id);
         $img = $_POST['image'];
         $client_name = $_POST['client_name'];
         $order_id = $_POST['order_id'];
-        if($client_name == $user->name){
-            $img = str_replace('data:image/jpeg;base64,', '', $img);   
-            $img = str_replace(' ', '+', $img);   
-            $data = base64_decode($img);
-    
-            if(!file_exists($_SERVER['DOCUMENT_ROOT'] . "/photos"))
-            {
-                mkdir($_SERVER['DOCUMENT_ROOT'] . "/photos");      
-            }
-            
-            if(file_exists($_SERVER['DOCUMENT_ROOT'] . "/photos/".$order_id.'.jpg'))
-            {
-                unlink($_SERVER['DOCUMENT_ROOT'] . "/photos/".$order_id.'.jpg');
-            }
-            $success = file_put_contents($_SERVER['DOCUMENT_ROOT'] . "/photos/".$order_id.'.jpg', $data);
-            return $success?json_encode('Save successfully'):json_encode("Unable to save the image");
-            
+        $img = str_replace('data:image/jpeg;base64,', '', $img);   
+        $img = str_replace(' ', '+', $img);   
+        $data = base64_decode($img);
+
+        if(!file_exists($_SERVER['DOCUMENT_ROOT'] . "/photos"))
+        {
+            mkdir($_SERVER['DOCUMENT_ROOT'] . "/photos");      
         }
-        else {
-            return json_encode("The name is incorrect");
+        
+        if(file_exists($_SERVER['DOCUMENT_ROOT'] . "/photos/".$order_id.'.jpg'))
+        {
+            unlink($_SERVER['DOCUMENT_ROOT'] . "/photos/".$order_id.'.jpg');
         }
+        $success = file_put_contents($_SERVER['DOCUMENT_ROOT'] . "/photos/".$order_id.'.jpg', $data);
+        return $success?json_encode('Save successfully'):json_encode("Unable to save the image");
     }
 
     public function complete_sa(Request $request)
@@ -93,11 +89,42 @@ class ServiceAgreementController extends Controller {
         // $serviceAgreement->fill($request->all());
         // $serviceAgreement->sa_state = '1';
         // $serviceAgreement->update();
+        $order = Order::find($request->order_id);
+        $order->token = "";
+        $order->update();
         $serviceAgreement = ServiceAgreement::updateOrCreate(['order_id' => $request->order_id]);
         $serviceAgreement->fill($request->all());
         $serviceAgreement->sa_state = '1';
         $serviceAgreement->update();
         return redirect('/shop-documents-list')->with('message', 'Completed Document Successfully');
+    }
+
+    public function confirm_link($token, Request $request)
+    {
+        if (! $request->hasValidSignature()) {
+            return ("The link is expired");
+        }
+        $data = json_decode(Crypt::decryptString($token), true);
+        $user = Clients::find($data['user_id']);
+        $customer = Clients::find($user->id);
+        $order = Order::find($data['order_id']);
+        
+        if($token == $order->token){
+            $documents = ServiceAgreement::where('order_id', $order->id)->first();
+        
+        
+            $order_details =DB::table('ordered_products')
+                            ->join('products', 'products.id', '=', 'ordered_products.productid')
+                            ->select('ordered_products.*','products.title')
+                            ->where('ordered_products.orderid', $order->id)
+                            ->get();
+            $card_details = ClientCreditCard::where('client_id', $user->id)->get();
+            
+            return view('home.service-agreements', compact('user', 'customer','documents', 'order','order_details','card_details'));
+        }
+        else {
+            return "You have alreday confirmed the Service Agreement";
+        }
     }
     
 }

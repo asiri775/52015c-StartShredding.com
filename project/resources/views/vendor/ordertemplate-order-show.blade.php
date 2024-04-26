@@ -74,6 +74,7 @@
                                         <tbody>
                                         <?php
                                         if($products){
+                                            $total = 0.00;
                                         foreach ($products As $product){
 
                                         $productDetails=$product->getProductidAttribute($product->productid);

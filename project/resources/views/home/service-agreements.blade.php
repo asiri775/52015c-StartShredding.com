@@ -102,16 +102,16 @@
              </div>
           </div>
           <div class="d-flex align-items-center">
-            <a href="" class="header-icon btn-icon-link mr-3 d-lg-inline-block d-none lh-25">
+            <!-- <a href="" class="header-icon btn-icon-link mr-3 d-lg-inline-block d-none lh-25">
               <span class="icon-phone1"></span>
               <span>(416) 255-1500</span>
-            </a>
+            </a> -->
             <!--a href="" class="header-icon btn-icon-link mr-3 d-lg-inline-block d-none lh-25">
               <span class="icon-mail1"></span>
               <span>info@startshredding.com</span>
             </a-->
             <!-- START User Info-->
-            <div class="pull-left p-r-10 fs-14 font-heading d-lg-inline-block d-none">
+            <!-- <div class="pull-left p-r-10 fs-14 font-heading d-lg-inline-block d-none">
               <span class="semi-bold">Smith</span> <span class="">Nest</span>
             </div>
             <div class="dropdown pull-right d-lg-block">
@@ -131,7 +131,7 @@
                 <a href="#" class="dropdown-item">Help</a>
                 <a href="#" class="dropdown-item">Logout</a>
               </div>
-            </div>
+            </div> -->
             <!-- END User Info-->
           </div>
         </div>
@@ -139,15 +139,15 @@
     </div>
     <!--End top-bar-->
 
-    <div class="main-menu shadow-sm v-2">
+    <!-- <div class="main-menu shadow-sm v-2">
       <div class="container-fluid">
         <div class="menu-bar header-sm-height main-menu-bar" data-pages-init='horizontal-menu' data-hide-extra-li="2">
           <a href="#" class="btn-link header-icon toggle-sidebar d-lg-none right" data-toggle="horizontal-menu">
             <i class="pg-icon">close</i>
           </a>
           <div class="m-search d-flex d-lg-none">
-            <!--a href="#" class="search-link d-lg-none fs-11"
-            data-toggle="search"><i class="icon-search1 text-light mr-2"></i>Search Invoice or Job#</a-->
+            <a href="#" class="search-link d-lg-none fs-11"
+            data-toggle="search"><i class="icon-search1 text-light mr-2"></i>Search Invoice or Job#</a>
              <div class="input-group w-100 p-2"> 
                <input type="text" class="form-control" placeholder="Search Invoice or Job#"> 
                <div class="input-group-text btn"><i class="icon-search1 text-white"></i></div> 
@@ -175,7 +175,7 @@
            </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!--End Main-menu-->
   </div>
   <div class="page-container ">
@@ -232,13 +232,13 @@
                                     <div class="col-md-6">
                                       <div class="form-group form-group-default required">
                                         <label>Company Name</label>
-                                        <input type="text" class="form-control" name="companyName" placeholder="Company Name" value="<?php echo $order->customer_name?>" required>
+                                        <input type="text" class="form-control client_info" id="companyName" placeholder="Company Name" value="<?php echo $user->business_name?>" required>
                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                       <div class="form-group form-group-default required">
                                         <label>Contact Name</label>
-                                        <input type="text" class="form-control" name="contactName" placeholder="Contact Name" value="<?php echo $order->customer_name?>" required>
+                                        <input type="text" class="form-control client_info" id="contactName" placeholder="Contact Name" value="<?php echo $order->customer_name?>" required>
                                        </div>
                                     </div>
                                   </div>  
@@ -246,13 +246,13 @@
                                   <div class="col-md-6">
                                     <div class="form-group form-group-default required">
                                       <label>Phone</label>
-                                      <input id="phone" type="tel" pattern="\d{3}\-\d{3}\-\d{4}" class="form-control telephone" data-mask="(999)-999-9999" placeholder="(999)-999-9999" value="<?php echo $order->customer_phone?>"  required />
+                                      <input id="phone" type="tel" pattern="\d{3}\-\d{3}\-\d{4}" class="form-control telephone client_info" data-mask="(999)-999-9999" placeholder="(999)-999-9999" value="<?php echo $order->customer_phone?>"  required />
                                     </div>
                                   </div>
                                   <div class="col-md-6">
                                     <div class="form-group form-group-default">
                                       <label>Email</label>
-                                      <input type="email" class="form-control" name="email" value="<?php echo $order->customer_email?>"  placeholder="joan@lifeforcephysio.com">
+                                      <input type="email" class="form-control" id="email" value="<?php echo $order->customer_email?>"  placeholder="joan@lifeforcephysio.com">
                                     </div>
                                   </div>
                                 </div>
@@ -261,7 +261,7 @@
                                   <div class="col-md-6">
                                     <div class="form-group form-group-default required">
                                       <label>Addresss Line 1</label>
-                                      <input type="text" class="form-control" id="bill-firstName" name="firstName" placeholder="577" value="<?php echo $customer->address?>"  required>
+                                      <input type="text" class="form-control client_info" id="bill-firstName" name="firstName" placeholder="577" value="<?php echo $customer->address?>"  required>
                                     </div>
                                   </div>
                                   <div class="col-md-6">
@@ -275,19 +275,19 @@
                                   <div class="col-md-4">
                                     <div class="form-group form-group-default required">
                                       <label>City</label>
-                                      <input type="text" class="form-control" id="bill-city" name="city" value="<?php echo $customer->city?>"  placeholder="Toronto" required>
+                                      <input type="text" class="form-control client_info" id="bill-city" name="city" value="<?php echo $customer->city?>"  placeholder="Toronto" required>
                                     </div>
                                   </div>
                                   <div class="col-md-4">
                                     <div class="form-group form-group-default">
                                       <label>State/Province/Region</label>
-                                      <input type="text" class="form-control" id="bill-state" name="state" value="<?php echo $customer->Province_State?>"  placeholder="Ontario">
+                                      <input type="text" class="form-control " id="bill-state" name="state" value="<?php echo $customer->Province_State?>"  placeholder="Ontario">
                                     </div>
                                   </div>
                                   <div class="col-md-4">
                                     <div class="form-group form-group-default required">
                                       <label>Postal Code</label>
-                                      <input type="text" class="form-control" id="bill-postal" name="postal"  placeholder="M9C 2Y3" required>
+                                      <input type="text" class="form-control client_info" id="bill-postal" name="postal"  placeholder="M9C 2Y3" value="<?php echo $customer->zip?>" required>
                                     </div>
                                   </div>
                                 </div>
@@ -295,7 +295,7 @@
                                 <div class="col-md-6">
                                   <div class="form-group form-group-default required">
                                     <label>Phone</label>
-                                    <input type="text" class="form-control" id="bill-phoneNumber" name="phoneNumber" value="<?php echo $customer->phone?>"  id="phoneNumber2" value="" placeholder="(999)-999-9999">
+                                    <input type="text" class="form-control client_info" id="bill-phoneNumber" name="phoneNumber" value="<?php echo $customer->phone?>" placeholder="(999)-999-9999" >
                                   </div>
                                 </div>
                                 <div class="col-md-6">
@@ -308,7 +308,7 @@
                               <div class="serv-check justify-content-between d-inline-flex w-100">
                                 <p class="font-montserrat bold fs-16 bold mt-3 mb-3">Shipping Address</p>
                                 <div class="form-check primary mt-1">
-                                  <input type="checkbox" onclick="checkBox(this)" id="defaultCheck">
+                                  <input type="checkbox" onclick="checkBox(this)" id="defaultCheck" checked>
                                   <label for="defaultCheck" class="bold">
                                     Same as Billing
                                   </label>
@@ -318,7 +318,7 @@
                                   <div class="col-md-6">
                                     <div class="form-group form-group-default required">
                                       <label>Addresss Line 1</label>
-                                      <input type="text" class="form-control" id="shipp-firstName" name="firstName" placeholder="577" required>
+                                      <input type="text" class="form-control client_info" id="shipp-firstName" name="firstName" placeholder="577" required>
                                     </div>
                                   </div>
                                   <div class="col-md-6">
@@ -332,7 +332,7 @@
                                   <div class="col-md-4">
                                     <div class="form-group form-group-default required">
                                       <label>City</label>
-                                      <input type="text" class="form-control" id="shipp-city" name="city" placeholder="Toronto" required>
+                                      <input type="text" class="form-control client_info" id="shipp-city" name="city" placeholder="Toronto" required>
                                     </div>
                                   </div>
                                   <div class="col-md-4">
@@ -344,7 +344,7 @@
                                   <div class="col-md-4">
                                     <div class="form-group form-group-default required">
                                       <label>Postal Code</label>
-                                      <input type="text" class="form-control" id="shipp-postal" name="postal" placeholder="M9C 2Y3" required>
+                                      <input type="text" class="form-control client_info" id="shipp-postal" name="postal" placeholder="M9C 2Y3" required>
                                     </div>
                                   </div>
                                 </div>
@@ -352,7 +352,7 @@
                                 <div class="col-md-6">
                                   <div class="form-group form-group-default required">
                                     <label>Phone</label>
-                                    <input type="text" class="form-control" id="shipp-phoneNumber" name="phoneNumber" id="phoneNumber3" value="" placeholder="(999)-999-9999">
+                                    <input type="text" class="form-control client_info" id="shipp-phoneNumber" name="phoneNumber" value="" placeholder="(999)-999-9999">
                                   </div>
                                 </div>
                                 <div class="col-md-6">
@@ -384,10 +384,10 @@
                                   <div class="form-group form-group-default input-group col-md-10">
                                     <div class="form-input-group">
                                       <label>Pick Up Date</label>
-                                      <input type="text" class="form-control" placeholder="Pick Up Date" id="datepicker-component2">
+                                      <input type="text" class="form-control" placeholder="Pick Up Date" value="{{date('m/d/Y', strtotime($order->booking_date))}}"  id="datepicker-component2" disabled>
                                     </div>
                                     <div class="input-group-append ">
-                                      <span class="input-group-text"><i class="pg-icon">calendar</i></span>
+                                      <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                     </div>
                                   </div>
                                 </div>
@@ -399,7 +399,7 @@
                                         <div class="form-input-group">
                                           <label>From</label>
                                           <div id="selector">
-                                            <select class="form-control input-lg">
+                                            <select class="form-control input-lg" id="operation_from">
                                               <option>7.00AM</option>
                                               <option selected="selected">8.00AM</option>
                                               <option>9.00AM</option>
@@ -424,7 +424,7 @@
                                         <div class="form-input-group">
                                           <label>To</label>
                                           <div id="selector">
-                                            <select class="form-control input-lg">
+                                            <select class="form-control input-lg" id="operation_to">
                                               <option>7.00AM</option>
                                               <option>8.00AM</option>
                                               <option>9.00AM</option>
@@ -457,7 +457,7 @@
                                             <th class="fs-14 font-montserrat text-center bold">QTY</th>
                                             <th class="fs-14 font-montserrat text-center bold">Item</th>
                                             <th class="fs-14 font-montserrat text-center bold">Rate</th>
-                                            <th class="fs-14 font-montserrat text-left bold" width="5%">Total</th>
+                                            <th class="fs-14 font-montserrat text-left bold" width="20%">Total</th>
                                           </tr>
                                         </thead>
                                         <tbody>
@@ -493,7 +493,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text bold">$</span>
                                                 </div>
-                                                <input type="number" min="0" step="0.01" value="0.75" class="form-control">
+                                                <input type="number" min="0" step="0.01" value="0.75" id="makeitcount" class="form-control">
                                             </div>
                                             </td>
                                           </tr>
@@ -609,14 +609,29 @@
                                       </li>
                                     </ul>
                                     <div class="clearfix"></div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <select class="form-control input-lg" id="sel_card">
+                                              <option>No Card Selected</option>
+                                              @for($i = 0; $i < count($card_details); $i++)
+                                                <option value="{{$i}}">CARD# {{$card_details[$i]->card_number}}</option>
+                                              @endfor
+                                            </select>
+                                            <!-- <div class="radio radio-primary radio-circle">
+                                                <input type="raio" checked="checked" value="1" id="checkbox9">
+                                                <label for="checkbox9" style="font-size: 10px !important;">CARD# **** **** **** 7829</label>
+                                            </div> -->
+                                        </div>
+                                    </div>
                                     <div class="form-group form-group-default required m-t-25">
                                       <label>Card holder's name</label>
-                                      <input type="text" class="form-control" placeholder="Name on the card" value="<?php echo $card_details->card_holder_name?>" required>
+                                      <input type="text" class="form-control card_info" id="card_holder_name" placeholder="Name on the card" required>
+                                      <div id="card-name-valid"></div>
                                     </div>
                                     <div class="form-group form-group-default required">
                                       <label>Card number</label>
                                       <!--input type="text" class="form-control" placeholder="8888-8888-8888-8888" required-->
-                                      <input type="text" class="form-control card-no" name="card-num" placeholder="8888 8888 8888 8888" value="<?php echo $card_details->card_number?>" size="18" id="cr_no" minlength="19" maxlength="19" required>
+                                      <input type="text" class="form-control card-no card_info" name="card-num" placeholder="8888 8888 8888 8888" size="18" id="cr_no" minlength="19" maxlength="19" required>
                                     </div>
                                       <div class="card-date mb-3 w-100">
                                          <div class="row no-margin">
@@ -626,19 +641,19 @@
                                               <div class="form-input-group">
                                                 <label class="fade">Month</label>
                                                 <div id="selector">
-                                                  <select class="form-control input-lg">
-                                                    <option selected="selected">Jan (01)</option>
-                                                    <option>Feb (02)</option>
-                                                    <option>Mar (03)</option>
-                                                    <option>Apr (04)</option>
-                                                    <option>May (05)</option>
-                                                    <option>Jun (06)</option>
-                                                    <option>Jul (07)</option>
-                                                    <option>Aug (08)</option>
-                                                    <option>Sep (09)</option>
-                                                    <option>Oct (10)</option>
-                                                    <option>Nov (11)</option>
-                                                    <option>Dec (12)</option>
+                                                  <select class="form-control input-lg card_info" id="exp_month">
+                                                    <option value="1">Jan (01)</option>
+                                                    <option value="2">Feb (02)</option>
+                                                    <option value="3">Mar (03)</option>
+                                                    <option value="4">Apr (04)</option>
+                                                    <option value="5">May (05)</option>
+                                                    <option value="6">Jun (06)</option>
+                                                    <option value="7">Jul (07)</option>
+                                                    <option value="8">Aug (08)</option>
+                                                    <option value="9">Sep (09)</option>
+                                                    <option value="10">Oct (10)</option>
+                                                    <option value="11">Nov (11)</option>
+                                                    <option value="12">Dec (12)</option>
                                                  </select>
                                                  <i class="fa fa-angle-down" aria-hidden="true"></i>
                                                  </div>
@@ -651,7 +666,7 @@
                                               <div class="form-input-group">
                                                 <label class="fade">Year</label>
                                                 <div id="selector">
-                                                  <select class="form-control input-lg">
+                                                  <select class="form-control input-lg card_info" id="exp_year">
                                                     <option selected="selected">2022</option>
                                                     <option>2023</option>
                                                     <option>2024</option>
@@ -670,18 +685,19 @@
                                           <div class="col-md-2 p-0">
                                             <label class="fs-14 m-25 sm-ml-0"><b>CCV Code</b></label>
                                               <div class="form-group required">
-                                                <input class="form-control mh-55 m-25 sm-ml-0" type="password" name="ccv" value="<?php echo $card_details->ccv?>" placeholder="000" size="1" minlength="3" maxlength="3" required>
+                                                <input class="form-control mh-55 m-25 sm-ml-0 card_info" type="password" id="ccv" name="ccv" placeholder="000" size="1" minlength="3" maxlength="3" required>
                                               </div>
                                           </div>
                                         </div>
                                        </div>
                                     </div>
+                                    <input name="csrf" id="csrf" value="{{ csrf_token() }}" hidden>
                                 <!-- </form> -->
                               </div>
                               <div class="row">
                                 <div class="sign-pad-iframe">
                                   <div class="iframe-container ml-5 ml-m-3">
-                                    <iframe src="/new_assets/signature.html"></iframe>
+                                    <iframe id="myFrame" src="/new_assets/signature.html"></iframe>
                                   </div>
                                 </div>
                                 <div class="sign-note">
@@ -704,11 +720,42 @@
                               </button>
                             </li>
                             <li class="next finish hidden">
-                              <a href="thankyou.html">
-                                <button aria-label="" class="btn btn-primary btn-cons from-left pull-right" type="submit">
+                            <form id="myForm" action="{{route('home.complete_sa')}}" method="POST">
+                              {{ csrf_field() }}
+                                <input name="company_name" id="form_companyName" hidden>
+                                <input name="contact_name" id="form_contactName" hidden>
+                                <input name="phone_number" id="form_phone" hidden>
+                                <input name="billing_address_1" id="form_bill-firstName" hidden>
+                                <input name="billing_address_2" id="form_bill-lastName" hidden>
+                                <input name="billing_city" id="form_bill-city" hidden>
+                                <input name="billing_state" id="form_bill-state" hidden>
+                                <input name="billing_postal_code" id="form_bill-postal" hidden>
+                                <input name="email" id="form_email" hidden>
+                                <input name="billing_phone" id="form_bill-phoneNumber" hidden>
+                                <input name="billing_email" id="form_bill-email" hidden>
+                                <input name="shipp_address_1" id="form_shipp-firstName" hidden>
+                                <input name="shipp_address_2" id="form_shipp-lastName" hidden>
+                                <input name="shipping_city" id="form_shipp-city" hidden>
+                                <input name="shipping_state" id="form_shipp-state" hidden>
+                                <input name="shipping_postal_code" id="form_shipp-postal" hidden>
+                                <input name="shippig_phone" id="form_shipp-phoneNumber" hidden>
+                                <input name="shipping_email" id="form_shipp-email" hidden>
+                                <input name="operation_from" id="form_operation_from" hidden>
+                                <input name="operation_to" id="form_operation_to" hidden>
+                                <input name="make_it_count" id="form_makeitcount" hidden>
+                                <input name="terms_accepted" id="form_terms_accepted" hidden>
+                                <input name="credit_card_name" id="form_card_holder_name" hidden>
+                                <input name="credit_card_number" id="form_card_number" hidden>
+                                <input name="credit_card_expire_month" id="form_exp_month" hidden>
+                                <input name="credit_card_expire_year" id="form_exp_year" hidden>
+                                <input name="credit_card_ccv" id="form_ccv" hidden>
+                                <input name="order_id" id="order_id" value="{{ $order->id }}" hidden>
+                                <button aria-label="" id="confirm_form" class="btn btn-primary btn-cons from-left pull-right" type="submit">
                                   <span>Confirm</span>
                                 </button>
-                              </a>
+                              </form>
+                              <input name="save_flag" id="save_flag" hidden>
+                              <input name="csrf" id="csrf" value="{{ csrf_token() }}" hidden>
                             </li>
                             <li class="previous first hidden">
                               <button aria-label="" class="btn btn-default btn-cons from-left pull-right" type="button">
@@ -778,8 +825,11 @@
 <script src="{{ URL::asset('new_assets/assets/plugins/mapplic/js/jquery.mousewheel.js')}}"></script>
 <script src="{{ URL::asset('new_assets/assets/plugins/mapplic/js/mapplic.js')}}"></script>
 <script src="{{ URL::asset('new_assets/assets/plugins/rickshaw/rickshaw.min.js')}}"></script>
-<script src="{{ URL::asset('new_assets/assets/plugins/jquery-metrojs/MetroJs.min.js')}}" type="text/javascript">
-</script>
+<script src="{{ URL::asset('new_assets/assets/plugins/jquery-metrojs/MetroJs.min.js')}}" type="text/javascript"></script>
+<script src="{{ URL::asset('new_assets/assets/plugins/jquery-inputmask/jquery.inputmask.min.js')}}" type="text/javascript"></script>
+<!-- <script src="{{ URL::asset('new_assets/assets/plugins/jquery-metrojs/MetroJs.min.js')}}" type="text/javascript"></script> -->
+
+
 <script src="{{ URL::asset('new_assets/assets/plugins/jquery-sparkline/jquery.sparkline.min.js')}}"
         type="text/javascript"></script>
 <script src="{{ URL::asset('new_assets/assets/plugins/skycons/skycons.js')}}" type="text/javascript"></script>
@@ -801,6 +851,7 @@
         type="text/javascript"></script>
 <script src="{{ URL::asset('new_assets/assets/js/form_wizard.js')}}"
         type="text/javascript"></script>      
+<script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
             
 <!-- END VENDOR JS -->
 <!-- BEGIN CORE TEMPLATE JS -->
@@ -808,7 +859,6 @@
 <script src="{{ URL::asset('new_assets/pages/js/pages.js')}}"></script>
 <!-- END CORE TEMPLATE JS -->
 <!-- BEGIN PAGE LEVEL JS -->
-<script src="{{ URL::asset('new_assets/assets/js/scripts.js')}}" type="text/javascript"></script>
 <!-- END PAGE LEVEL JS -->
 <!-- END CORE TEMPLATE JS -->
 <!-- BEGIN PAGE LEVEL JS -->
@@ -816,6 +866,30 @@
 <script src="{{ URL::asset('new_assets/assets/js/scripts.js')}}" type="text/javascript"></script>
 <script>
     $(document).ready(function(){
+      var cardNum = document.getElementById('cr_no');
+      cardNum.onkeyup = function () {
+          if (this.value == this.lastValue) return;
+          var caretPosition = this.selectionStart;
+          var sanitizedValue = this.value.replace(/[^0-9]/gi, '');
+          var parts = [];
+          
+          for (var i = 0, len = sanitizedValue.length; i < len; i += 4) {
+              parts.push(sanitizedValue.substring(i, i + 4));
+          }
+          
+          for (var i = caretPosition - 1; i >= 0; i--) {
+              var c = this.value[i];
+              if (c < '0' || c > '9') {
+                  caretPosition--;
+              }
+          }
+          caretPosition += Math.floor(caretPosition / 4);
+          
+          this.value = this.lastValue = parts.join(' ');
+          this.selectionStart = this.selectionEnd = caretPosition;
+      }
+
+      $('#datepicker-component2').datepicker();
         $(document).click(function() {
             $('#here').hide();
         });
@@ -870,62 +944,224 @@
                 }
             });
         });
-    });
-</script>
+        <?php
+          $jsonData = json_encode($card_details);
+          ?>
+        $('#sel_card').change(function(){
+          var i = $('#sel_card').val();
+          console.log(i);
+          var card_details = <?php echo $jsonData; ?>;
+          if(i == "No Card Selected"){
+            $('#card_holder_name').val("");
+            $('#cr_no').val("");
+            $('#exp_month').val("");
+            $('#exp_year').val("");
+            $('#ccv').val("");
+            $('#form_card_holder_name').val("");
+            $('#form_card_number').val("");
+            $('#form_exp_month').val("");
+            $('#form_exp_year').val("");
+            $('#form_ccv').val("");
+          }
+          else {
+            $('#card_holder_name').val(card_details[i].card_holder_name);
+            $('#cr_no').val(card_details[i].card_number);
+            $('#exp_month').val(card_details[i].exp_month);
+            $('#exp_year').val(card_details[i].exp_year);
+            $('#ccv').val(card_details[i].ccv);
+            $('#form_card_holder_name').val($('#card_holder_name').val());
+            $('#form_card_number').val($('#cr_no').val());
+            $('#form_exp_month').val($('#exp_month').val());
+            $('#form_exp_year').val($('#exp_year').val());
+            $('#form_ccv').val($('#ccv').val());
+          }
 
-
-  <script>
-$(document).ready(function(){
-
-//For Card Number formatted input
-var cardNum = document.getElementById('cr_no');
-cardNum.onkeyup = function (e) {
-    if (this.value == this.lastValue) return;
-    var caretPosition = this.selectionStart;
-    var sanitizedValue = this.value.replace(/[^0-9]/gi, '');
-    var parts = [];
-    
-    for (var i = 0, len = sanitizedValue.length; i < len; i += 4) {
-        parts.push(sanitizedValue.substring(i, i + 4));
-    }
-    
-    for (var i = caretPosition - 1; i >= 0; i--) {
-        var c = this.value[i];
-        if (c < '0' || c > '9') {
-            caretPosition--;
+        });
+        if ($('#defaultCheck').is(':checked')) {
+          $('#shipp-firstName').val($('#bill-firstName').val());
+          $('#shipp-lastName').val($('#bill-lastName').val());
+          $('#shipp-city').val($('#bill-city').val());
+          $('#shipp-state').val($('#bill-state').val());
+          $('#shipp-postal').val($('#bill-postal').val());
+          $('#shipp-phoneNumber').val($('#bill-phoneNumber').val());
+          $('#shipp-email').val($('#bill-email').val());
+          
+        } else {
+          $('#shipp-firstName,#shipp-lastName,#shipp-city,#shipp-state,#shipp-postal,#shipp-phoneNumber,#shipp-email').val('');
         }
-    }
-    caretPosition += Math.floor(caretPosition / 4);
+
     
-    this.value = this.lastValue = parts.join(' ');
-    this.selectionStart = this.selectionEnd = caretPosition;
-}
+
+  
+
+  
+ 
+    function validate_form() {
+        // Perform your validation here
+        var val_flag = true;
+        var client_info = $('.client_info');
+          for(var i = 0; i < client_info.length; i++){
+              if(client_info[i].value == "" || client_info[i].value == undefined){
+                  val_flag = false;
+                  break;
+              }
+          }
+        // Return true if validation passes, otherwise return false
+        return val_flag;
+    }
+
+    function validate() {
+        // Perform your validation here
+        var isValid = true; // For demonstration purposes, always return true
+        if(document.getElementById('save_flag').value != 1){
+          isValid = false;
+        }
+        // Return true if validation passes, otherwise return false
+        return isValid;
+    }
+    var card_info = $('.card_info');
+    function val_card(){
+      var card_flag = true;
+      for(var i = 0; i < card_info.length; i++){
+            if(card_info[i].value == "" || card_info[i].value == undefined ){
+                card_flag = false;
+                break;
+            }
+        }
+        return card_flag;
+    }
+    var iframe = document.getElementById('myFrame');
+
+    // Access the contentDocument of the iframe
+    var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+
+    // Access the element inside the iframe by its ID
+    var client_name = iframeDocument.getElementById('client_name');
+    console.log(client_name);
+  document.getElementById("myForm").addEventListener("submit", function(event) {
+        // Call the validate function
+        var isValid = validate();
+        var val_flag = validate_form();
+        
+        
+        
+        // If validation fails, prevent form submission
+        event.preventDefault();
+        
+        var card_val = val_card();
+        
+        if(card_val != true){
+          alert("You must input card detail correctly");
+          // return false;
+        }
+        else if($('#checkbox-agree').is(':checked') == false){
+            alert('You must check agreement with the terms and policy');
+            // return false;
+        }
+        else if(client_name.value != $('#card_holder_name').val()){
+          alert("The name must be the same as the card holder name");
+          // return false;
+        }
+        else if (!isValid || !val_flag) {
+            
+            if(!isValid){
+              alert('You must save the signature');
+              // return false;
+            }
+            else {
+              alert('You must complete the form');
+              // return false;
+            }
+        }
+        else if($('#sel_card').val() == "No Card Selected"){
+          alert('You must select the card');
+          $('#form_companyName').val($('#companyName').val());
+            $('#form_contactName').val($('#contactName').val());
+            $('#form_phone').val($('#phone').val());
+            $('#form_bill-firstName').val($('#bill-firstName').val());
+            $('#form_bill-city').val($('#bill-city').val());
+            $('#form_bill-postal').val($('#bill-postal').val());
+            $('#form_email').val($('#email').val());
+            $('#form_bill-lastName').val($('#bill-lastName').val());
+            $('#form_bill-phoneNumber').val($('#bill-phoneNumber').val());
+            $('#form_bill-email').val($('#bill-email').val());
+            $('#form_shipp-firstName').val($('#shipp-firstName').val());
+            $('#form_shipp-lastName').val($('#shipp-lastName').val());
+            $('#form_shipp-city').val($('#shipp-city').val());
+            $('#form_shipp-state').val($('#shipp-state').val());
+            $('#form_shipp-postal').val($('#shipp-postal').val());
+            $('#form_shipp-phoneNumber').val($('#shipp-phoneNumber').val());
+            $('#form_shipp-email').val($('#shipp-email').val());
+            $('#form_operation_from').val($('#operation_from').val());
+            $('#form_operation_to').val($('#operation_to').val());
+            $('#form_makeitcount').val($('#makeitcount').val());
+            $('#form_terms_accepted').val("1");
+            $('#form_card_holder_name').val($('#card_holder_name').val());
+            $('#form_card_number').val($('#cr_no').val());
+            $('#form_exp_month').val($('#exp_month').val());
+            $('#form_exp_year').val($('#exp_year').val());
+            $('#form_ccv').val($('#ccv').val());
+            this.submit();
+        }
+         else {
+          $('#form_companyName').val($('#companyName').val());
+            $('#form_contactName').val($('#contactName').val());
+            $('#form_phone').val($('#phone').val());
+            $('#form_bill-firstName').val($('#bill-firstName').val());
+            $('#form_bill-city').val($('#bill-city').val());
+            $('#form_bill-postal').val($('#bill-postal').val());
+            $('#form_email').val($('#email').val());
+            $('#form_bill-lastName').val($('#bill-lastName').val());
+            $('#form_bill-phoneNumber').val($('#bill-phoneNumber').val());
+            $('#form_bill-email').val($('#bill-email').val());
+            $('#form_shipp-firstName').val($('#shipp-firstName').val());
+            $('#form_shipp-lastName').val($('#shipp-lastName').val());
+            $('#form_shipp-city').val($('#shipp-city').val());
+            $('#form_shipp-state').val($('#shipp-state').val());
+            $('#form_shipp-postal').val($('#shipp-postal').val());
+            $('#form_shipp-phoneNumber').val($('#shipp-phoneNumber').val());
+            $('#form_shipp-email').val($('#shipp-email').val());
+            $('#form_operation_from').val($('#operation_from').val());
+            $('#form_operation_to').val($('#operation_to').val());
+            $('#form_makeitcount').val($('#makeitcount').val());
+            $('#form_terms_accepted').val("1");
+            $('#form_card_holder_name').val($('#card_holder_name').val());
+            $('#form_card_number').val($('#cr_no').val());
+            $('#form_exp_month').val($('#exp_month').val());
+            $('#form_exp_year').val($('#exp_year').val());
+            $('#form_ccv').val($('#ccv').val());
+
+            console.log("Form validation successful. Proceeding with form submission.");
+            this.submit();
+        }
+    });
+//For Card Number formatted input
+
 
 //For Date formatted input
-var expDate = document.getElementById('exp');
-expDate.onkeyup = function (e) {
-    if (this.value == this.lastValue) return;
-    var caretPosition = this.selectionStart;
-    var sanitizedValue = this.value.replace(/[^0-9]/gi, '');
-    var parts = [];
-    
-    for (var i = 0, len = sanitizedValue.length; i < len; i += 2) {
-        parts.push(sanitizedValue.substring(i, i + 2));
-    }
-    
-    for (var i = caretPosition - 1; i >= 0; i--) {
-        var c = this.value[i];
-        if (c < '0' || c > '9') {
-            caretPosition--;
-        }
-    }
-    caretPosition += Math.floor(caretPosition / 2);
-    
-    this.value = this.lastValue = parts.join('/');
-    this.selectionStart = this.selectionEnd = caretPosition;
-}
+  var expDate = document.getElementById('exp');
+  expDate.onkeyup = function (e) {
+      if (this.value == this.lastValue) return;
+      var caretPosition = this.selectionStart;
+      var sanitizedValue = this.value.replace(/[^0-9]/gi, '');
+      var parts = [];
+      
+      for (var i = 0, len = sanitizedValue.length; i < len; i += 2) {
+          parts.push(sanitizedValue.substring(i, i + 2));
+      }
+      
+      for (var i = caretPosition - 1; i >= 0; i--) {
+          var c = this.value[i];
+          if (c < '0' || c > '9') {
+              caretPosition--;
+          }
+      }
+      caretPosition += Math.floor(caretPosition / 2);
+      
+      this.value = this.lastValue = parts.join('/');
+      this.selectionStart = this.selectionEnd = caretPosition;
+  }
 
-});
 
 function checkBox(){
   if ($('#defaultCheck').is(':checked')) {
@@ -960,11 +1196,13 @@ $('#popover-div').popover({
     }
 });
 
-  </script>
-  <script type="text/javascript">
-    $('#phoneNumber1').inputmask("(999) 999-9999");
-    $('#phoneNumber2').inputmask("(999) 999-9999");
-    $('#phoneNumber3').inputmask("(999) 999-9999");
+});
+
+</script>
+<script type="text/javascript">
+    $('#phone').inputmask("(999) 999-9999");
+    $('#bill-phoneNumber').inputmask("(999) 999-9999");
+    $('#shipp-phoneNumber').inputmask("(999) 999-9999");
 </script>
   <!-- END PAGE LEVEL JS -->
 
