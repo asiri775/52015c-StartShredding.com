@@ -23,7 +23,7 @@ class RedirectIfAuthenticated
                     return redirect('/');
                     // return redirect(route('categories.product', 'dry-clean-laundry'));
                 }
-                return redirect('/shop-signin');
+                //return redirect('/shop-signin');
 
                 break;
 
