@@ -924,11 +924,11 @@ class OrderTemplateController extends Controller
             ->where('orders.customerid', $id)->where('orders.template_id',$temp_id)->where('order_templates.vendor_id', Auth::user()->id);
         $client_id=$id;
         $template_id=$temp_id;
-        if ($_GET['orderId']) {
+        if (isset($_GET['orderId'])) {
             $orders->where('orders.id', $_GET['orderId']);
         }
 
-        if ($_GET['quickdate']) {
+        if (isset($_GET['quickdate'])) {
             $all = false;
             switch ($_GET['quickdate']) {
                 case 'today':
@@ -979,25 +979,36 @@ class OrderTemplateController extends Controller
             }
 
         }
-        if (($_GET['fromTime']) && $_GET['toTime']) {
+        if (isset($_GET['fromTime']) && isset($_GET['toTime'])) {
             $orders->whereBetween('orders.booking_date', [date('Y-m-d', strtotime($_GET['fromTime'])), date('Y-m-d', strtotime($_GET['toTime']))]);
         }
-        if ($_GET['status']) {
+        if (isset($_GET['status'])) {
             $orders->where('orders.status', $_GET['status']);
         }
-
-        $jobType = str_replace('=', '', $_GET['jobType']);
-        if ($jobType) {
-           $orders->where('orders.job_type', $jobType);
-        }
-        $jobName = str_replace('=', '', $_GET['jobName']);
-        if ($jobName) {
-            $orders->whereRaw('LOWER(orders.job_name) LIKE  "%'.trim(strtolower($jobName)).'%"');  
-        }
-        $orderType = str_replace('=', '', $_GET['orderType']);
-        if ($orderType) {
-            $orders->where('orders.order_type', $orderType);
-        }
+		
+	    if(isset($_GET['orderType']))
+		{
+			$jobType = str_replace('=', '', $_GET['jobType']);
+			if ($jobType) {
+			   $orders->where('orders.job_type', $jobType);
+			}
+		}	
+		if(isset($_GET['jobName']))
+		{
+			$jobName = str_replace('=', '', $_GET['jobName']);
+			if ($jobName) {
+				$orders->whereRaw('LOWER(orders.job_name) LIKE  "%'.trim(strtolower($jobName)).'%"');  
+			}
+		}
+		
+		if(isset($_GET['orderType']))
+		{
+			$orderType = str_replace('=', '', $_GET['orderType']);
+			if ($orderType) {
+				$orders->where('orders.order_type', $orderType);
+			}
+		}
+      
          $orders->orderBy('orders.id', 'desc')->get();
          $template=OrderTemplate::where('id',$template_id)->first();
          $query = "SELECT * FROM `job_type`";
